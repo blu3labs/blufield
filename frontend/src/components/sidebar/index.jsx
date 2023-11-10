@@ -5,7 +5,7 @@ import Logo from "@/assets/iconLogo.png";
 import "./index.css";
 
 function Sidebar() {
-  let subscribedFields = [
+  let newestFields = [
     {
       name: "Field 1",
       logo: "https://picsum.photos/200",
@@ -36,17 +36,13 @@ function Sidebar() {
     },
   ];
 
-  let newestFields = [
+  let subscribedFields = [
     {
       name: "Field 1",
       logo: "https://picsum.photos/200",
     },
     {
       name: "Field 2",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
       logo: "https://picsum.photos/200",
     },
     {
