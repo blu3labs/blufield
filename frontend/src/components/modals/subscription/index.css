@@ -1,0 +1,68 @@
+.fieldSubBtn {
+  align-self: center;
+  width: 250px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.fieldSubBtn:hover {
+  transform: scale(1.02);
+}
+
+.ant-modal-body {
+  padding: 0 !important;
+}
+
+.ant-modal {
+  max-width: 390px !important;
+}
+
+.ant-modal-content {
+  padding: 16px !important;
+}
+
+.fieldDetailModal {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fieldDetailTitle {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.subsDesc {
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
+  text-align: justify;
+}
+
+.subBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.subBtn:hover {
+  transform: scale(1.02);
+}
