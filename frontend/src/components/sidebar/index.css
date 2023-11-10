@@ -77,7 +77,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     gap: 8px;
-    max-height: 220px;
+    max-height: 270px;
     overflow-y: auto;
 }
 

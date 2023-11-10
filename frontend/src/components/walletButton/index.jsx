@@ -1,10 +1,16 @@
 import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Link } from "react-router-dom";
-import UserLogo from "@/assets/user.png"
+import UserLogo from "@/assets/user.png";
 import "./index.css";
 
 function WalletButton() {
+  let userPage = {
+    visible: true,
+    name: "test field 1",
+    logo: "https://picsum.photos/200",
+  };
+
   return (
     <ConnectButton.Custom>
       {({
@@ -47,9 +53,23 @@ function WalletButton() {
 
               return (
                 <div className="walletWrapper">
-                  <Link to="/create-field" className="myFieldButton">Create Field</Link>
+                  {userPage.visible ? (
+                    <Link to={"/" + userPage.name} className="myFieldButton">
+                      <img
+                        src={userPage.logo ?? UserLogo}
+                        alt="avatar"
+                        draggable="false"
+                      />
+                      <span>{userPage.name}</span>
+                    </Link>
+                  ) : (
+                    <Link to="/create-field" className="myFieldButton">
+                      Create Field
+                    </Link>
+                  )}
                   <button className="walletBtn" onClick={openAccountModal}>
-                    <img src={UserLogo} alt="avatar" draggable="false"/>
+                    <span>{account.displayBalance}</span>
+                    <span>|</span>
                     <span>{account.displayName}</span>
                   </button>
                 </div>
