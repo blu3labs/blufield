@@ -4,7 +4,7 @@ import { RiUploadCloud2Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import "../index.css";
 
-function UploadFile({ image, setImage }) {
+function UploadFile({ image, setImage, className, text }) {
   const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = async (acceptedFiles) => {
@@ -55,7 +55,7 @@ function UploadFile({ image, setImage }) {
   });
 
   return (
-    <div {...getRootProps()} className="createFieldBanner">
+    <div {...getRootProps()} className={className}>
       <input {...getInputProps()} />
       {image ? (
         <img
@@ -70,7 +70,7 @@ function UploadFile({ image, setImage }) {
       ) : (
         <>
           <RiUploadCloud2Fill className="uploadIcon" />
-          <span>Upload Banner</span>
+          <span>{text}</span>
         </>
       )}
     </div>
