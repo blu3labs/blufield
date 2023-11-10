@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from "react";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { ColorPicker } from "antd";
+import UploadFile from "./components/uploadFile";
 import Input from "@/ui/input";
 import Textarea from "@/ui/textarea";
 import "./index.css";
@@ -8,19 +9,19 @@ import "./index.css";
 function CreateField() {
 
   const [accentColor, setAccentColor] = useState("#00A9FF");
+  const [banner, setBanner] = useState(null);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--create-accent", accentColor);
   }, [accentColor])
 
+  console.log(banner);
+
 
   return (
     <div className="createField">
       <div className="createFieldTop">
-        <button className="createFieldBanner">
-          <RiUploadCloud2Fill className="uploadIcon" />
-          <span>Upload Banner</span>
-        </button>
+        <UploadFile image={banner} setImage={setBanner} />
 
         <button className="createFieldLogo">
           <RiUploadCloud2Fill className="uploadIcon" />

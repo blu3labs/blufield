@@ -17,6 +17,13 @@
     flex-direction: column;
     gap: 4px;
     border-bottom: 2px solid var(--create-accent);
+    cursor: pointer;
+}
+
+.createFieldBanner img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .uploadIcon{
