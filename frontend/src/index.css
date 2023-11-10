@@ -6,6 +6,7 @@
   --text: #26282B;
   --sidebar-width: 280px;
   --outlet-width: calc(100% - var(--sidebar-width));
+  --content-size: 1000px;
 }
 
 

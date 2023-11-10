@@ -6,7 +6,7 @@ import "./index.css";
 
 function WalletButton() {
   let userPage = {
-    visible: true,
+    visible: false,
     name: "test field 1",
     logo: "https://picsum.photos/200",
   };
@@ -63,7 +63,7 @@ function WalletButton() {
                       <span>{userPage.name}</span>
                     </Link>
                   ) : (
-                    <Link to="/create-field" className="myFieldButton">
+                    <Link to="/create/field" className="myFieldButton">
                       Create Field
                     </Link>
                   )}
