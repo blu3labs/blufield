@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { RiUploadCloud2Fill } from "react-icons/ri";
 import { ColorPicker } from "antd";
-import UploadFile from "./components/uploadFile";
+import UploadImage from "@/components/upload/image";
 import Input from "@/ui/input";
 import Textarea from "@/ui/textarea";
 import "./index.css";
@@ -10,30 +9,33 @@ function CreateField() {
   const [accentColor, setAccentColor] = useState("#00A9FF");
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [twitter, setTwitter] = useState(null);
+  const [github, setGithub] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [about, setAbout] = useState(null);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--create-accent", accentColor);
   }, [accentColor]);
 
-  console.log(banner);
-  console.log(logo);
-
   return (
     <div className="createField">
       <div className="createFieldTop">
-        <UploadFile
+        <UploadImage
           image={banner}
           setImage={setBanner}
           className="createFieldBanner"
+          iconClassName="createUploadIcon"
           text="Upload Banner"
         />
 
-     
-
-        <UploadFile
+        <UploadImage
           image={logo}
           setImage={setLogo}
           className="createFieldLogo"
+          iconClassName="createUploadIcon"
           text="Upload Logo"
         />
 
@@ -47,13 +49,37 @@ function CreateField() {
 
       <div className="createFieldBody">
         <div className="createFieldItems">
-          <Input title="Name" placeholder="Enter Name" name="name" />
-          <Input title="Email" placeholder="Enter Email" name="email" />
+          <Input
+            title="Name"
+            placeholder="Enter Name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            title="Email"
+            placeholder="Enter Email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
         <div className="createFieldItems">
-          <Input title="Twitter" placeholder="Enter Twitter" name="twitter" />
-          <Input title="Github" placeholder="Enter Github" name="github" />
+          <Input
+            title="Twitter"
+            placeholder="Enter Twitter"
+            name="twitter"
+            value={twitter}
+            onChange={(e) => setTwitter(e.target.value)}
+          />
+          <Input
+            title="Github"
+            placeholder="Enter Github"
+            name="github"
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+          />
         </div>
         <Input
           title="Monthly Subscription Price (BNB)"
@@ -61,12 +87,22 @@ function CreateField() {
           type="number"
           price={true}
           name="price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          onKeyPress={(event) => {
+            if (!/[0-9+.]/.test(event.key)) {
+              event.preventDefault();
+            }
+          }}
         />
         <Textarea
           title="About"
           placeholder="Enter About"
           rows={3}
           name="about"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+          maxLength={512}
         />
       </div>
 

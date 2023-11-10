@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
-import "../index.css";
+import "./index.css";
 
-function UploadFile({ image, setImage, className, text }) {
+function UploadImage({ image, setImage, className, text , iconClassName}) {
   const [isUploading, setIsUploading] = useState(false);
 
   const onDrop = async (acceptedFiles) => {
@@ -69,7 +69,7 @@ function UploadFile({ image, setImage, className, text }) {
         <span>Drop the files here...</span>
       ) : (
         <>
-          <RiUploadCloud2Fill className="uploadIcon" />
+          <RiUploadCloud2Fill className={iconClassName}/>
           <span>{text}</span>
         </>
       )}
@@ -77,4 +77,4 @@ function UploadFile({ image, setImage, className, text }) {
   );
 }
 
-export default UploadFile;
+export default UploadImage;

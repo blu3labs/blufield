@@ -31,7 +31,7 @@
     text-align: center;
 }
 
-.uploadIcon{
+.createUploadIcon{
     color: var(--create-accent);
     font-size: 36px;
 }
