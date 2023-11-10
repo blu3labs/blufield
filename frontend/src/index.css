@@ -1,0 +1,39 @@
+:root{
+  --first: #FFFFFF;
+  --second: #F5F5F5;
+  --third: #D2D2D2;
+  --accent: #00A9FF;
+  --text: #26282B;
+  --sidebar-width: 280px;
+  --outlet-width: calc(100% - var(--sidebar-width));
+}
+
+
+body {
+  background: var(--second);
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--white) !important;
+  font-family: 'Ubuntu', sans-serif !important;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--first);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--third);
+  border-radius: 8px;
+}
