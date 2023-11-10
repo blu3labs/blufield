@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UploadImage from "@/components/upload/image";
 import Input from "@/ui/input";
 import UploadAudio from "@/components/upload/audio";
+import SelectBox from "@/ui/selectBox";
 import "./index.css";
 
 function CreateAudio() {
@@ -9,6 +10,7 @@ function CreateAudio() {
   const [title, setTitle] = useState(null);
   const [shortText, setShortText] = useState(null);
   const [audio, setAudio] = useState(null);
+  const [visibility, setVisibility] = useState("Public");
 
   console.log(audio);
 
@@ -48,6 +50,18 @@ function CreateAudio() {
             className="createPostAudio"
             iconClassName="createPostAudioUploadIcon"
             text="Upload Audio"
+          />
+
+          <SelectBox
+            title="Visibility"
+            placeholder="Select Visibility"
+            name="visibility"
+            value={visibility}
+            onChange={(e) => setVisibility(e)}
+            options={[
+              { value: "Public", label: "Public" },
+              { value: "Subscribers", label: "Only Subscribers" },
+            ]}
           />
         </div>
       </div>

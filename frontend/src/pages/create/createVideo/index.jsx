@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UploadImage from "@/components/upload/image";
 import Input from "@/ui/input";
+import SelectBox from "@/ui/selectBox";
 import UploadVideo from "@/components/upload/video";
 
 
@@ -9,6 +10,7 @@ function CreateVideo() {
   const [title, setTitle] = useState(null);
   const [shortText, setShortText] = useState(null);
   const [video, setVideo] = useState(null);
+  const [visibility, setVisibility] = useState("Public");
 
   console.log(video);
 
@@ -47,6 +49,18 @@ function CreateVideo() {
         iconClassName="createPostUploadIcon"
         text="Upload Banner"
       />
+
+<SelectBox 
+        title="Visibility"
+        placeholder="Select Visibility"
+        name="visibility"
+        value={visibility}
+        onChange={(e) => setVisibility(e)}
+        options={[
+          { value: "Public", label: "Public" },
+          { value: "Subscribers", label: "Only Subscribers" },
+        ]}
+        />
 
       <button className="createPostButton">Create Video</button>
     </div>

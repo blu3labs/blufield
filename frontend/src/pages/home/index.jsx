@@ -1,5 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
 import "./index.css"
 
 function Home() {
@@ -10,7 +11,30 @@ function Home() {
       </Helmet>
 
       <div className='homeWrapper'>
-        Home Page
+      
+
+
+
+        <Link to='/create/field'>
+          Create Field
+        </Link>
+
+        <Link to='/edit/field'>
+          Edit Field
+        </Link>
+
+        <Link to="/create/text">
+          Create Text
+        </Link>
+
+        <Link to="/create/video">
+          Create Video
+        </Link>
+
+        <Link to="/create/audio">
+          Create Audio
+        </Link>
+
       </div>
     </>
   )
