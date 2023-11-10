@@ -18,6 +18,8 @@ import "./reset.css";
 
 window.Buffer = Buffer;
 
+bscTestnet.name = "BSC Testnet";
+
 
 const { chains, publicClient } = configureChains(
   [bscTestnet],

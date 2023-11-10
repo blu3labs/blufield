@@ -1,6 +1,7 @@
 import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { IoChevronDownOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import UserLogo from "@/assets/user.png"
 import "./index.css";
 
 function WalletButton() {
@@ -23,8 +24,7 @@ function WalletButton() {
           (!authenticationStatus || authenticationStatus === "authenticated");
 
         return (
-          <
-            >
+          <>
             {(() => {
               if (!connected) {
                 return (
@@ -47,14 +47,10 @@ function WalletButton() {
 
               return (
                 <div className="walletWrapper">
-                  <button className="walletBtn">
-                    My Field
-                  </button>
+                  <Link to="/create-field" className="myFieldButton">Create Field</Link>
                   <button className="walletBtn" onClick={openAccountModal}>
-               
-                      <span>{account.displayName}</span>
-                      <IoChevronDownOutline className="downIcon" />
-          
+                    <img src={UserLogo} alt="avatar" draggable="false"/>
+                    <span>{account.displayName}</span>
                   </button>
                 </div>
               );

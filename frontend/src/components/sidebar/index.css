@@ -115,3 +115,8 @@
     height: 32px;
     border-radius: 8px;
 }
+
+.sidebarBottom{
+    width: 100%;
+    padding: 0 1rem;
+}

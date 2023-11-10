@@ -13,7 +13,7 @@ body {
   background: var(--second);
   padding: 0 !important;
   margin: 0 !important;
-  color: var(--white) !important;
+  color: var(--text) !important;
   font-family: 'Ubuntu', sans-serif !important;
 }
 

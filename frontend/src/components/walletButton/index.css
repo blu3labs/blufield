@@ -1,12 +1,11 @@
 .connectBtn{
-  height: auto;
   border-radius: 8px;
-  padding: 0 14px;
   background: var(--accent);
-  color: var(--white);
+  color: #fff;
   height: 40px;
   font-size: 16px;
   font-weight: 600;
+  width: 100%;
 }
 
 .connectBtn:hover{
@@ -19,8 +18,7 @@
 
 .walletWrapper{
   width: 100%;
-  height: 40px;
-  display: flex;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,25 +27,38 @@
 }
 
 
+.myFieldButton{
+  width: 100%;
+  background: var(--second);
+  border-radius: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+}
 
+.myFieldButton:hover{
+  transform: scale(1.02);
+}
 
 .downIcon{
   margin-top: 2px;
-  color: var(--white);
+  color: #fff;
   font-size: 18px;
 }
 
 .walletBtn{
-  background: var(--third);
+  background: var(--second);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: auto;
-  height: 100%;
-  /* box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.5); */
+  width: 100%;
+  height: 40px;
   border-radius: 8px;
-  padding: 0 4px 0 6px;
+  padding: 0;
   margin: 0;
   gap: 8px;
 }
@@ -55,29 +66,20 @@
   transform: scale(1.02);
 }
 
-.userBalance{
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--white);
-}
-
-.walletAddress{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  background: #ffffff3f;
+.walletBtn img{
+  width: 24px;
+  height: 24px;
   border-radius: 8px;
-  padding: 4px 6px;
 }
 
-.walletAddress span{
+.walletBtn span{
   font-size: 16px;
   font-weight: 500;
-  color: var(--white);
-  letter-spacing: 0.5px;
+  color: var(--text);
 }
+
+
+
 
 @media only screen and (max-width: 970px) {
   .connectBtn{
