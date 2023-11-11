@@ -17,17 +17,12 @@ const generateString = (length) => {
     return result;
   };
 
-let metadataFormat = {
-    banner:"",
-    title:"",
-    short_text:"",
-    text:"",
-    visibility:""
-}
+
 export const CreateData = async (bucketName, address, signer,chain, switchNetworkAsync,data, type) => {
 
 
    
+    data = {title: data.title, shortText: data.shortText, bannerUrl: data.bannerUrl, text: data.text}
 
     const broadcasting = {
         gasLimit:1000000,
@@ -42,7 +37,6 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
         console.log("hooo")
 
      
-        // upload banner
 
 
         const auth = await getOffchainAuthKeys(address, signer, switchNetworkAsync, chain)
@@ -70,7 +64,7 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
         
         const metadataForUs = {
             userAddress: address,
-            banner: data.banner,
+            banner: data.bannerURL,
             title: data.title,
             short_text: data.short_text
         }

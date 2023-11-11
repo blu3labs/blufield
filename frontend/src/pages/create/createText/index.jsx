@@ -6,9 +6,10 @@ import "./index.css";
 import SelectBox from "../../../ui/selectBox";
 import { CreateData } from "../../../utils/create";
 import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSigner } from "../../../utils/useSigner";
 import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
+import { api } from "../../../utils/api";
 
 function CreateText() {
   const { id } = useParams();
@@ -23,9 +24,11 @@ function CreateText() {
   const signer = useSigner();
   const navigate = useNavigate();
   const { address, connector } = useAccount();
+  const {} = useParams()
 
   const createText = async () => {
     const bannerUrl = await uploadPhoto(banner);
+    console.log(visibility)
     const d = await CreateData(
       "testfrombackaf",
       address,
@@ -37,7 +40,7 @@ function CreateText() {
         title,
         shortText,
         text,
-        visibility: visibility === "Public" ? "d" : "VISIBILITY_TYPE_PRIVATE",
+        visibility: visibility === "Public" ? "VISIBILITY_TYPE_PUBLIC_READ" : "VISIBILITY_TYPE_PRIVATE",
       },
       "text"
     );
@@ -47,6 +50,7 @@ function CreateText() {
     try {
       const formData = new FormData();
       formData.append("file", img);
+      console.log("imggg")
       const { data: res } = await api.post("img", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
