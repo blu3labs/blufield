@@ -138,6 +138,7 @@ function EditField() {
             title="Name"
             placeholder="Enter Name"
             name="name"
+            disabled={true}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />

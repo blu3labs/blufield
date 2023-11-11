@@ -60,6 +60,17 @@ function CreateField() {
         setLoading({ uploadLoading: false, imageLoading: false });
         return;
       }
+      await multiTxCreateBucket(
+        name,
+        address,
+        await connector?.getProvider(),
+        switchNetworkAsync,
+        chain?.id
+      );
+
+      
+      //web 3 area
+
       const { data: res } = await api.post("user", {
         name: name,
         social_media: {
@@ -72,7 +83,7 @@ function CreateField() {
         logo: logoUrl,
         banner: bannerUrl,
         accentColor: accentColor,
-        bucketName: "",
+        bucketName: name,
         owner: address,
       });
       console.log(res, "res");
@@ -178,13 +189,7 @@ function CreateField() {
         }}
         disabled={loading.imageLoading || loading.uploadLoading}
         onClick={async () => {
-          multiTxCreateBucket(
-            "name",
-            address,
-            await connector?.getProvider(),
-            switchNetworkAsync,
-            chain?.id
-          );
+          handleSaveUser();
         }}
       >
         {loading.imageLoading

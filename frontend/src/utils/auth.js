@@ -9,6 +9,9 @@ export const getOffchainAuthKeys = async (
   switchNetworkAsync,
   chain
 ) => {
+  if (chain?.toString() !== "5600") {
+    await switchNetworkAsync("5600");
+  }
   const storageResStr = localStorage.getItem(address);
   const sps = await getAllSps(client);
   if (storageResStr) {
@@ -16,15 +19,13 @@ export const getOffchainAuthKeys = async (
     if (storageRes.expirationTime < Date.now()) {
       toast.error("Your auth key has expired, please generate a new one");
       localStorage.removeItem(address);
+
       return;
     }
 
     return storageRes;
   }
 
-  if (chain?.toString() !== "5600") {
-    await switchNetworkAsync("5600");
-  }
   const offchainAuthRes =
     await client.offchainauth.genOffChainAuthKeyPairAndUpload(
       {
@@ -44,7 +45,6 @@ export const getOffchainAuthKeys = async (
   }
 
   localStorage.setItem(address, JSON.stringify(offChainData));
-  await switchNetworkAsync("97");
 
   return offChainData;
 };

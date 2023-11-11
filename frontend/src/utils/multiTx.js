@@ -32,7 +32,7 @@ async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsy
     signingData
   );
 
-  let groupName = "gaydirigubap2dsdssdfsdf";
+  let groupName = bucketName + "group";
   const createGroupTx = await client.group.createGroup({
     creator: address,
     groupName,
@@ -74,10 +74,11 @@ async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsy
   });
 
   console.log("result tx ", tx);
-  const groupId = tx.events?.filter((e) => e.type === "greenfield.storage.EventCreateGroup")[0].attributes[1].value
-
+  let groupId = tx.events?.filter((e) => e.type === "greenfield.storage.EventCreateGroup")[0].attributes[1].value
+  groupId = groupId.replace(/"/g, "");
+  console.log("group id ", groupId);
   const mirrorGroupTx = await client.crosschain.mirrorGroup({
-    groupName,
+    groupName:"",
     destChainId: 97,
     operator: address,
     id: groupId,

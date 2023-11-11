@@ -4,25 +4,47 @@ const { broadcast } = require("../utils/broadcast");
 const fs = require("fs");
 const axios = require("axios");
 const { getCheckSums } = require("@bnb-chain/greenfiled-file-handle");
-const sharp = require("sharp")
+const sharp = require("sharp");
 async function pushImage(file, client) {
   const maxWidth = 800;
-const maxHeight = 600;
+  const maxHeight = 600;
 
   try {
     // save file use fs
     const timeStamps = new Date().getTime();
-   const buf = await  sharp(file.buffer)
-      .resize(maxWidth, maxHeight, {
-        fit: 'inside',
-        withoutEnlargement: true,
-      })
-      .jpeg({ quality: 80, progressive: true }) // Progressive JPEGs
-      .webp({ quality: 80 }) // Convert to WebP format
-     .toBuffer()
-    const filedata = buf
+    let buf = file.buffer;
+    if (
+      file.mimetype.split("/")[1] == "jpeg" ||
+      file.mimetype.split("/")[1] == "png" ||
+      file.mimetype.split("/")[1] == "jpg" ||
+      file.mimetype.split("/")[1] == "webp" ||
+      file.mimetype.split("/")[1] == "gif" ||
+      file.mimetype.split("/")[1] == "svg" ||
+      file.mimetype.split("/")[1] == "apng" ||
+      file.mimetype.split("/")[1] == "avif" ||
+      file.mimetype.split("/")[1] == "bmp" ||
+      file.mimetype.split("/")[1] == "ico" ||
+      file.mimetype.split("/")[1] == "tiff"
+    ) {
+      buf = await sharp(file.buffer)
+        .resize(maxWidth, maxHeight, {
+          fit: "inside",
+          withoutEnlargement: true,
+        })
+        .jpeg({ quality: 80, progressive: true }) // Progressive JPEGs
+        .webp({ quality: 80 }) // Convert to WebP format
+        .toBuffer();
+    }
+
+
+    const filedata = buf;
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
-    let name=  "images/" + timeStamps + generateString(10)+"."+file.mimetype.split("/")[1]
+    let name =
+      "images/" +
+      timeStamps +
+      generateString(10) +
+      "." +
+      file.mimetype.split("/")[1];
     const imageTx = await client.object.createObject(
       {
         bucketName: "profiles",
@@ -63,9 +85,7 @@ const maxHeight = 600;
     const allSps = await getAllSps(client);
     // fs.unlinkSync(file.path);
     return {
-      url:
-        allSps[0].endpoint +
-        "/view/profiles/"+name
+      url: allSps[0].endpoint + "/view/profiles/" + name,
     };
   } catch (error) {
     console.log(error);
