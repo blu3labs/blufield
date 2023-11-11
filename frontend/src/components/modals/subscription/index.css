@@ -14,16 +14,12 @@
   transform: scale(1.02);
 }
 
-.ant-modal-body {
-  padding: 0 !important;
-}
-
-.ant-modal {
+.subDonateModal {
   max-width: 390px !important;
 }
 
-.ant-modal-content {
-  padding: 16px !important;
+.ant-modal-content{
+  padding: 0 !important;
 }
 
 .fieldDetailModal {
@@ -34,6 +30,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
+  padding: 16px;
 }
 
 .fieldDetailTitle {

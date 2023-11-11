@@ -1,0 +1,52 @@
+.audioContent{
+    background: var(--first);
+    border-radius: 8px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1rem;
+    height: auto;
+    padding: 8px;
+}
+
+.audioContent img{
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    border-radius: 4px;
+}
+
+.audioContentInfo{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.audioContentTitle{
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+}
+
+.audioContentDescription{
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    text-align: center;
+}
+
+.audioContentInfo audio{
+    width: 100%;
+}
+
+.audioContentDate{
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+}

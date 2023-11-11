@@ -5,9 +5,11 @@ import { FaGithub } from "react-icons/fa";
 import { TfiTwitter } from "react-icons/tfi";
 import SubscriptionModal from "../../components/modals/subscription";
 import NoLogo from "@/assets/user.png";
-import "./index.css";
 import DonateModal from "../../components/modals/donate";
 import TextContent from "./components/textContent";
+import VideoContent from "./components/videoContent";
+import AudioContent from "./components/audioContent";
+import "./index.css";
 
 function Field() {
   const { id } = useParams();
@@ -37,9 +39,7 @@ function Field() {
           <img src={data?.banner} alt="banner" draggable="false" />
         )}
       </div>
-         
 
-          
       <div className="fieldTopArea">
         <div className="fieldLogo">
           {data?.logo !== "" && (
@@ -109,19 +109,20 @@ function Field() {
             ))}
           </div>
           <div className="fieldContentsArea">
-            
-
-            <TextContent data={data} />
-            <TextContent data={data} />
-            <TextContent data={data} />
-            <TextContent data={data} />
+            {Array(12)
+              .fill()
+              .map((item, index) =>
+                index % 3 === 0 ? (
+                  <TextContent data={data} key={index} />
+                ) : index % 3 === 1 ? (
+                  <VideoContent data={data} key={index} />
+                ) : (
+                  <AudioContent data={data} key={index} />
+                )
+              )}
           </div>
         </div>
       </div>
-
-      
-
-
     </div>
   );
 }

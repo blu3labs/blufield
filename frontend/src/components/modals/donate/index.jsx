@@ -63,6 +63,8 @@ function DonateModal() {
         closeIcon={null}
         footer={null}
         centered
+        className="subDonateModal"
+
       >
         <div className="fieldDetailModal">
           <div className="fieldDetailTitle">Donate</div>

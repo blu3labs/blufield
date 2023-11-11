@@ -25,6 +25,7 @@ function SubscriptionModal() {
         closeIcon={null}
         footer={null}
         centered
+        className="subDonateModal"
       >
         <div className="fieldDetailModal">
           <div className="fieldDetailTitle">Subscribe</div>

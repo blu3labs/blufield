@@ -1,0 +1,85 @@
+.videoContent {
+  background: var(--first);
+  border-radius: 8px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
+  height: auto;
+  padding: 8px;
+}
+
+.videoContentBanner {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.videoContentBanner img:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoContentBanner img:nth-child(2) {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #00000020;
+    object-fit: cover;
+  }
+
+.videoContentInfo {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.videoContentInfo span:nth-child(1) {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+
+.videoContentInfo span:nth-child(2) {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  text-align: center;
+}
+
+.videoContent video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+}
+
+
+.videoModal{
+    width: auto;
+    height: 400px;
+    aspect-ratio: 16/9;
+    z-index: 90;
+}
+
+
+.ant-modal {
+    width: auto !important;
+    min-width: 390px !important;
+}
