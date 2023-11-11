@@ -1,0 +1,232 @@
+.fiedlWrapper {
+  width: 100%;
+  background: var(--third);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+.fieldBanner {
+  background: var(--field-accent);
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 2px solid var(--field-accent);
+  overflow: hidden;
+  position: sticky;
+  top: -180px;
+  z-index: 2;
+}
+
+.fieldBanner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+.fieldTopArea {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 16px;
+  margin-top: -80px;
+  position: sticky;
+  top: 40px;
+  z-index: 3;
+}
+
+.fieldLogo {
+  width: 120px;
+  height: 120px;
+  background: var(--first);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 2px solid var(--field-accent);
+  overflow: hidden;
+}
+
+.fieldLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fieldBody {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.fieldLeftArea {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: sticky;
+  top: 166px;
+  width: 350px;
+}
+
+.fieldUserTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  width: 100%;
+}
+
+.fieldUserShortInfo {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.fieldUserAboutBox {
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  /* border: 1px solid var(--field-accent); */
+  border-radius: 8px;
+  margin: 8px 0;
+  background: var(--first);
+}
+
+.fieldAboutTitle {
+  font-weight: 700;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.fieldAboutContent {
+  width: 100%;
+  height: auto;
+  text-align: justify;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.fieldSocials {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.fieldSocials a {
+  width: 24px;
+  height: 24px;
+  background: var(--field-accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fieldSocials a:hover {
+  transform: scale(1.1);
+}
+
+.fieldSocialIcon {
+  color: var(--first);
+  font-size: 16px;
+}
+
+.fieldRightArea {
+  width: calc(100% - 366px);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-top: -56px;
+  background: var(--third);
+}
+
+.fieldRightTabMenus {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--second);
+  padding-right: 16px;
+  position: sticky;
+  top: 120px;
+  background: var(--third);
+  z-index: 3;
+  padding-top: 1rem;
+}
+
+.fieldRightTabMenuItem {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+  border-bottom: 2px solid transparent;
+  z-index: 1;
+  margin-bottom: -2px;
+  width: 80px;
+}
+
+.fieldActiveTabItem {
+  border-bottom: 2px solid var(--field-accent);
+  font-weight: 700;
+}
+
+.editBtn {
+  width: 200px;
+  background: var(--field-accent);
+  color: #fff;
+  border-radius: 8px;
+  height: 32px;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editBtn:hover {
+  transform: scale(1.02);
+}
+
+
+.fieldContentsArea{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 0 8px;
+}
+

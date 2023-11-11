@@ -1,0 +1,10 @@
+.homeWrapper {
+  width: 95%;
+  max-width: 768px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+

@@ -1,0 +1,29 @@
+.app {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.outletWrapper {
+  width: var(--outlet-width);
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.outlet{
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 1rem;
+}
