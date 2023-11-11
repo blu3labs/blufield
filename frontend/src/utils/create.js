@@ -56,6 +56,17 @@ export const CreateData = async (bucketName, address, signer, switchNetworkAsync
           signingData
         );
 
+        // update partial part of metadata
+
+        const metadataForUs = {
+            userAddress: address,
+            banner: data.banner,
+            title: data.title,
+            short_text: data.short_text
+        }
+
+        // send to our bucket
+
         console.log(uploadRes, " upload result")
         // upload object
     }

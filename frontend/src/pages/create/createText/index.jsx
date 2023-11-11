@@ -4,6 +4,9 @@ import Input from "@/ui/input";
 import Textarea from "@/ui/textarea";
 import "./index.css";
 import SelectBox from "../../../ui/selectBox";
+import { CreateData } from "../../../utils/create";
+import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
+import { useNavigate } from "react-router-dom";
 
 function CreateText() {
   const [banner, setBanner] = useState(null);
@@ -11,8 +14,30 @@ function CreateText() {
   const [shortText, setShortText] = useState(null);
   const [text, setText] = useState(null);
   const [visibility, setVisibility] = useState("Public");
+  const { chain } = useNetwork();
+  const { switchNetworkAsync } = useSwitchNetwork();
+  const signer = useSigner();
+  const navigate = useNavigate();
+  const { address, connector } = useAccount();
 
+  const createText = async () => {
+    const d = await CreateData(
+      "texts",
+      address,
+      signer,
+      switchNetworkAsync,
+      {
+        banner,
+        title,
+        shortText,
+        text,
+        visibility: visibility === "Public" ? "d": "VISIBILITY_TYPE_PRIVATE",
+      },
+      "text"
+    
+    )
 
+  }
   return (
     <div className="createPost">
 
@@ -65,7 +90,9 @@ function CreateText() {
 
     
 
-      <button className="createPostButton" >Create Text</button>
+      <button className="createPostButton" onClick={(e) => {
+        createText()
+      }} >Create Text</button>
     </div>
   );
 }
