@@ -25,7 +25,7 @@ const maxHeight = 600;
     let name=  "images/" + timeStamps + generateString(10)+"."+file.mimetype.split("/")[1]
     const imageTx = await client.object.createObject(
       {
-        bucketName: "users",
+        bucketName: "profiles",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -47,7 +47,7 @@ const maxHeight = 600;
     });
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "users",
+        bucketName: "profiles",
         objectName: name,
         body: filedata,
         txnHash: txHash.transactionHash,
@@ -65,7 +65,7 @@ const maxHeight = 600;
     return {
       url:
         allSps[0].endpoint +
-        "/view/users/"+name
+        "/view/profiles/"+name
     };
   } catch (error) {
     console.log(error);
@@ -84,7 +84,7 @@ async function createUser(body, client) {
     const { expectCheckSums, contentLength } = await getCheckSums(buffered);
     const userTx = await client.object.createObject(
       {
-        bucketName: "users",
+        bucketName: "profiles",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -107,7 +107,7 @@ async function createUser(body, client) {
 
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "users",
+        bucketName: "profiles",
         objectName: body.name + ".json",
         body: buffered,
         txnHash: txHash.transactionHash,
@@ -139,7 +139,7 @@ async function getAllUser(client) {
   try {
     const sps = await getAllSps(client);
     const getAllBucketIds = await client.object.listObjects({
-      bucketName: "users",
+      bucketName: "profiles",
       endpoint: sps[0].endpoint,
     });
     let objects = [
@@ -150,7 +150,7 @@ async function getAllUser(client) {
     for (let i of objects) {
       try {
         const { data: response } = await axios.get(
-          sps[0].endpoint + "/view/users/" + i.ObjectInfo.ObjectName
+          sps[0].endpoint + "/view/profiles/" + i.ObjectInfo.ObjectName
         );
         users.push(response);
       } catch (error) {
@@ -174,7 +174,7 @@ async function getUser(name, client) {
   try {
     const sps = await getAllSps(client);
     const { data: response } = await axios.get(
-      sps[0].endpoint + "/view/users/" + name + ".json"
+      sps[0].endpoint + "/view/profiles/" + name + ".json"
     );
     return {
       data: response,
@@ -192,7 +192,7 @@ async function getUser(name, client) {
 async function updateUser(body, client) {
   try {
     const deleteTx = await client.object.deleteObject({
-      bucketName: "users",
+      bucketName: "profiles",
       objectName: body.name + ".json",
       operator: process.env.WALLET_ADDRESS,
     });
@@ -204,7 +204,7 @@ async function updateUser(body, client) {
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     const userTx = await client.object.createObject(
       {
-        bucketName: "users",
+        bucketName: "profiles",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -227,7 +227,7 @@ async function updateUser(body, client) {
 
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "users",
+        bucketName: "profiles",
         objectName: body.name + ".json",
         body: filedata,
         txnHash: txHash.transactionHash,
