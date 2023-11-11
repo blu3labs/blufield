@@ -70,12 +70,8 @@ app.put("/user", async (req, res) => {
 app.post("/checksums", async (req, res) => {
   const body = req.body;
   const buffered = Buffer.from(JSON.stringify(body).toString("utf8"));
-
   const { expectCheckSums, contentLength } = await getCheckSums(buffered);
-  return {
-    expectCheckSums: expectCheckSums,
-    contentLength: contentLength,
-  };
+  res.json({ expectCheckSums, contentLength });
 });
 
 const port = process.env.PORT || API_PORT;
