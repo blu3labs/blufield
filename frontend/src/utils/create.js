@@ -1,5 +1,6 @@
 import { getOffchainAuthKeys } from "./auth";
 import { client } from "./client";
+import {getCheckSums} from "@bnb-chain/greenfield-js-sdk"
 
 
 
