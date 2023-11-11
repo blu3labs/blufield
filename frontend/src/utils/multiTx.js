@@ -38,12 +38,6 @@ async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsy
     groupName,
     extra: "",
   });
-  const mirrorGroupTx = await client.crosschain.mirrorGroup({
-    groupName,
-    destChainId: 97,
-    operator: address,
-    id: "",
-  });
 
   const principal = {
     type: PermissionTypes.PrincipalType.PRINCIPAL_TYPE_GNFD_GROUP,
@@ -80,6 +74,24 @@ async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsy
   });
 
   console.log("result tx ", tx);
+  const groupId = tx.events?.filter((e) => e.type === "greenfield.storage.EventCreateGroup")[0].attributes[1].value
+
+  const mirrorGroupTx = await client.crosschain.mirrorGroup({
+    groupName,
+    destChainId: 97,
+    operator: address,
+    id: groupId,
+  });
+
+  await mirrorGroupTx.broadcast({
+    granter: address,
+    payer: address,
+    denom: "BNB",
+    gasLimit: 1000000,
+    gasPrice: 5000000000,
+  })
+
+
 }
 
 export default multiTxCreateBucket;
