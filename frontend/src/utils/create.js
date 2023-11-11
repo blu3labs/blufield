@@ -1,6 +1,8 @@
+import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
 import { getOffchainAuthKeys } from "./auth";
 import { client } from "./client";
-import {getCheckSums} from "@bnb-chain/greenfield-js-sdk"
+
+import { getCheckSums }  from "@bnb-chain/greenfiled-file-handle"
 
 
 
@@ -12,15 +14,21 @@ let metadataFormat = {
     text:"",
     visibility:""
 }
-export const CreateData = async (bucketName, address, signer, switchNetworkAsync,data, type) => {
+export const CreateData = async (bucketName, address, signer,chain, switchNetworkAsync,data, type) => {
 
+
+   
+
+    console.log("hee", type, data)
     if (type === "text") {
 
+        console.log("hooo")
         // create object
 
-        const client = client
         // uppload banner
-        const auth = getOffchainAuthKeys(address, signer, switchNetworkAsync)
+        console.log(address, signer, switchNetworkAsync, chain)
+        const auth = await getOffchainAuthKeys(address, signer, switchNetworkAsync, chain)
+        console.log("auth",auth)
         const filedata = Buffer.from(JSON.stringify(data).toString("utf8"));
         const { expectCheckSums, contentLength } = await getCheckSums(filedata);
         const signingData = {
@@ -30,6 +38,7 @@ export const CreateData = async (bucketName, address, signer, switchNetworkAsync
             address,
           };
         
+          console.log("signnnnn")
         const userTx = await client.object.createObject(
           {
             bucketName: bucketName,
@@ -57,7 +66,7 @@ export const CreateData = async (bucketName, address, signer, switchNetworkAsync
           signingData
         );
 
-        
+
 
         // update partial part of metadata
 

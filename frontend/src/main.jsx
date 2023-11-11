@@ -16,6 +16,7 @@ import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
 
 window.Buffer = Buffer;
 
+
 bscTestnet.name = "BSC Testnet";
 
 const greenfiels = {

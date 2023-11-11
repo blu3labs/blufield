@@ -8,6 +8,8 @@ import { CreateData } from "../../../utils/create";
 import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { useSigner } from "../../../utils/useSigner";
+import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
+
 
 function CreateText() {
   const [banner, setBanner] = useState(null);
@@ -22,10 +24,14 @@ function CreateText() {
   const { address, connector } = useAccount();
 
   const createText = async () => {
+
+    await getEddsaCompressedPublicKey("foo")
+    console.log(await connector.getProvider())
     const d = await CreateData(
       "texts",
       address,
-      signer,
+      await connector.getProvider(),
+      chain.id,
       switchNetworkAsync,
       {
         banner,
