@@ -1,24 +1,18 @@
-const { client } = require("../config/client");
 const { generateString } = require("../utils/generateString");
 const { getAllSps } = require("../utils/getSps");
 const { broadcast } = require("../utils/broadcast");
 const fs = require("fs");
-const { get } = require("http");
+
 const { getCheckSums } = require("@bnb-chain/greenfiled-file-handle");
 
 async function pushImage(file, client) {
   try {
     // save file use fs
     const filedata = fs.readFileSync(file.path);
-
-    
-
-    console.log("get checksums started",filedata);
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
-    console.log("tx started");
     const imageTx = await client.object.createObject(
       {
-        bucketName: "name",
+        bucketName: "users",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -38,11 +32,10 @@ async function pushImage(file, client) {
     const txHash = await imageTx.broadcast({
       ...broadcast,
     });
-    console.log("tx ended");
-    console.log("upload started");
+
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "name",
+        bucketName: "users",
         objectName: file.originalname,
         body: filedata,
         txnHash: txHash.transactionHash,
@@ -55,14 +48,10 @@ async function pushImage(file, client) {
         address: process.env.WALLET_ADDRESS,
       }
     );
-
-    console.log(uploadRes, "upload ended");
-
     const allSps = await getAllSps(client);
-    //remove file
     fs.unlinkSync(file.path);
     return {
-      url: allSps[0].endpoint + "/view/name/" + file.originalname,
+      url: allSps[0].endpoint + "/view/users/images/" + file.originalname,
     };
   } catch (error) {
     console.log(error);
@@ -84,9 +73,7 @@ async function createUser(
   accentColor,
   socail_media,
   montly_price
-) {
-
-}
+) {}
 
 module.exports = {
   createUser,
