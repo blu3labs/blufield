@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import "./index.css";
 
-function SubscriptionModal() {
+function SubscriptionModal({ price }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCancel = () => {
@@ -38,7 +38,7 @@ function SubscriptionModal() {
           <button className="subBtn">
             <span>Subscribe</span>
             <span>|</span>
-            <span>0.01 BNB</span>
+            <span>{price} BNB</span>
           </button>
         </div>
       </Modal>

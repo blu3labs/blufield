@@ -4,8 +4,13 @@ import UploadImage from "@/components/upload/image";
 import Input from "@/ui/input";
 import Textarea from "@/ui/textarea";
 import "./index.css";
-
+import { api } from "../../../utils/api";
+import toast from "react-hot-toast";
+import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 function CreateField() {
+  const navigate = useNavigate();
+  const { address } = useAccount();
   const [accentColor, setAccentColor] = useState("#00A9FF");
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
@@ -19,6 +24,60 @@ function CreateField() {
   useEffect(() => {
     document.documentElement.style.setProperty("--create-accent", accentColor);
   }, [accentColor]);
+  const uploadPhoto = async (img) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", img);
+      const { data: res } = await api.post("img", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res.url;
+    } catch (error) {
+      console.log(error);
+
+      return "err";
+    }
+  };
+  const [loading, setLoading] = useState({
+    imageLoading: false,
+    uploadLoading: false,
+  });
+  const handleSaveUser = async () => {
+    try {
+      setLoading({ ...loading, imageLoading: true });
+      const logoUrl = await uploadPhoto(logo);
+      const bannerUrl = await uploadPhoto(banner);
+      setLoading({ uploadLoading: true, imageLoading: false });
+      if (logoUrl === "err" || bannerUrl === "err") {
+        toast.error("Error uploading image");
+        setLoading({ uploadLoading: false, imageLoading: false });
+        return;
+      }
+      const { data: res } = await api.post("user", {
+        name: name,
+        social_media: {
+          twitter: twitter,
+          github: github,
+          email: email,
+        },
+        price: price,
+        about: about,
+        logo: logoUrl,
+        banner: bannerUrl,
+        accentColor: accentColor,
+        bucketName: "",
+        owner: address,
+      });
+      console.log(res, "res");
+      setLoading({ ...loading, uploadLoading: false });
+      navigate(`/${name}`);
+    } catch (error) {
+      setLoading({ imageLoading: false, uploadLoading: false });
+      console.log(error);
+    }
+  };
 
   return (
     <div className="createField">
@@ -106,7 +165,23 @@ function CreateField() {
         />
       </div>
 
-      <button className="createFieldButton">Create Field</button>
+      <button
+        className="createFieldButton"
+        style={{
+          cursor: loading.imageLoading || loading.uploadLoading ? "wait" : "",
+          opacity: loading.imageLoading || loading.uploadLoading ? "0.5" : "",
+        }}
+        disabled={loading.imageLoading || loading.uploadLoading}
+        onClick={() => {
+          handleSaveUser();
+        }}
+      >
+        {loading.imageLoading
+          ? "Image Uploading..."
+          : loading.uploadLoading
+          ? "Loading..."
+          : "Create Field"}
+      </button>
     </div>
   );
 }

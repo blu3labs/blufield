@@ -10,10 +10,12 @@ import TextContent from "./components/textContent";
 import VideoContent from "./components/videoContent";
 import AudioContent from "./components/audioContent";
 import "./index.css";
-
+import { api } from "../../utils/api";
+import { useAccount } from "wagmi";
+import { getAddress } from "../../utils/getAddress";
 function Field() {
   const { id } = useParams();
-
+  const { address } = useAccount();
   const [accentColor, setAccentColor] = useState("#00A9FF");
 
   const [data, setData] = useState({
@@ -31,20 +33,34 @@ function Field() {
   let tabMenuItems = ["All Posts", "Texts", "Videos", "Audios"];
 
   const [activeTab, setActiveTab] = useState("All Posts");
+  const [fieldDetails, setFieldDetails] = useState();
+  const fetchFieldDetails = async () => {
+    try {
+      const { data: res } = await api.get(`user/${id}`);
+      setFieldDetails(res.data);
+      setAccentColor(res.data.accentColor);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFieldDetails();
+  }, [id]);
 
   return (
     <div className="fiedlWrapper">
       <div className="fieldBanner">
-        {data?.banner !== "" && (
-          <img src={data?.banner} alt="banner" draggable="false" />
+        {fieldDetails?.banner !== "" && (
+          <img src={fieldDetails?.banner} alt="banner" draggable="false" />
         )}
       </div>
 
       <div className="fieldTopArea">
         <div className="fieldLogo">
-          {data?.logo !== "" && (
+          {fieldDetails?.logo !== "" && (
             <img
-              src={data?.logo ?? NoLogo}
+              src={fieldDetails?.logo ?? NoLogo}
               alt="logo"
               draggable="false"
               onError={(e) => {
@@ -54,42 +70,53 @@ function Field() {
             />
           )}
         </div>
-        {data?.owner ? (
+        {fieldDetails && fieldDetails?.owner == address ? (
           <Link to="/edit/field" className="editBtn">
             Edit
           </Link>
         ) : (
-          <SubscriptionModal />
+          <SubscriptionModal price={fieldDetails?.price} />
         )}
       </div>
 
       <div className="fieldBody">
         <div className="fieldLeftArea">
           <div className="fieldUserTitle">
-            <span>Arda Güler</span>
+            <span>{fieldDetails?.name}</span>
           </div>
           <div className="fieldUserShortInfo">15 Subs, 20 Posts</div>
 
           <div className="fieldUserAboutBox">
             <div className="fieldAboutTitle">About</div>
-            <div className="fieldAboutContent">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Praesentium iure tempore magnam expedita quod iste at fuga officia
-              inventore quas ducimus cum pariatur ea eveniet quaerat, atque
-              repellat iusto?
-            </div>
+            <div className="fieldAboutContent">{fieldDetails?.about}</div>
             <div className="fieldSocials">
-              <a href="" target="_blank" rel="noopener noreferrer">
-                <HiOutlineMail className="fieldSocialIcon" />
-              </a>
-
-              <a href="" target="_blank" rel="noopener noreferrer">
-                <TfiTwitter className="fieldSocialIcon" />
-              </a>
-
-              <a href="" target="_blank" rel="noopener noreferrer">
-                <FaGithub className="fieldSocialIcon" />
-              </a>
+              {fieldDetails?.social_media?.email && (
+                <a
+                  href={fieldDetails?.social_media?.email}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <HiOutlineMail className="fieldSocialIcon" />
+                </a>
+              )}
+              {fieldDetails?.social_media?.twitter && (
+                <a
+                  href={fieldDetails?.social_media?.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <TfiTwitter className="fieldSocialIcon" />
+                </a>
+              )}
+              {fieldDetails?.social_media?.github && (
+                <a
+                  href={fieldDetails?.social_media?.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGithub className="fieldSocialIcon" />
+                </a>
+              )}
             </div>
           </div>
           <DonateModal />

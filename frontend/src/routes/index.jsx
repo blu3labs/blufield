@@ -27,7 +27,7 @@ const routes = createBrowserRouter([
         element: <CreateField />,
       },
       {
-        path: "edit/field",
+        path: "edit/field/:id",
         element: <EditField />,
       },
       {

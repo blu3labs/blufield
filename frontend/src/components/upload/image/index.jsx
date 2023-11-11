@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import "./index.css";
+import { api } from "../../../utils/api";
 
-function UploadImage({ image, setImage, className, text , iconClassName}) {
+function UploadImage({ image, setImage, className, text, iconClassName }) {
   const [isUploading, setIsUploading] = useState(false);
-
+  console.log(image, "image");
   const onDrop = async (acceptedFiles) => {
     const fileExtension = acceptedFiles[0]?.name
       ?.split(".")
@@ -54,6 +55,9 @@ function UploadImage({ image, setImage, className, text , iconClassName}) {
     maxFiles: 1,
   });
 
+
+
+
   return (
     <div {...getRootProps()} className={className}>
       <input {...getInputProps()} />
@@ -69,7 +73,7 @@ function UploadImage({ image, setImage, className, text , iconClassName}) {
         <span>Drop the files here...</span>
       ) : (
         <>
-          <RiUploadCloud2Fill className={iconClassName}/>
+          <RiUploadCloud2Fill className={iconClassName} />
           <span>{text}</span>
         </>
       )}

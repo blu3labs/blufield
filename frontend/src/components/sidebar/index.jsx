@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import WalletButton from "../walletButton";
 import Logo from "@/assets/iconLogo.png";
 import "./index.css";
+import { api } from "../../utils/api";
 
 function Sidebar() {
   let newestFields = [
@@ -50,7 +51,20 @@ function Sidebar() {
       logo: "https://picsum.photos/200",
     },
   ];
+  const [fields, setFields] = useState([]);
+  const fetchNewsetFields = async () => {
+    try {
+      const { data: res } = await api.get("user");
+      setFields(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    fetchNewsetFields();
+  }, []);
+  console.log(fields, "fields");
   return (
     <div className="sidebar">
       <div className="sidebarTop">
@@ -82,7 +96,7 @@ function Sidebar() {
             <div className="sidebarFieldsTitle">Newest Fields</div>
 
             <div className="sidebarFieldsItems">
-              {newestFields.map((item, index) => (
+              {fields && fields?.map((item, index) => (
                 <Link
                   to={"/" + item.name}
                   className="sidebarFieldItem"
@@ -96,10 +110,9 @@ function Sidebar() {
           </div>
         </div>
       </div>
-                  <div className="sidebarBottom">
-
-      <WalletButton />
-                  </div>
+      <div className="sidebarBottom">
+        <WalletButton />
+      </div>
     </div>
   );
 }
