@@ -31,15 +31,15 @@ const routes = createBrowserRouter([
         element: <EditField />,
       },
       {
-        path: "create/text",
+        path: "create/text/:id",
         element: <CreateText />,
       },
       {
-        path: "create/audio",
+        path: "create/audio/:id",
         element: <CreateAudio />,
       },
       {
-        path: "create/video",
+        path: "create/video/:id",
         element: <CreateVideo />,
       },
       {

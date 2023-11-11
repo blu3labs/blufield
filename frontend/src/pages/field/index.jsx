@@ -19,9 +19,8 @@ function Field() {
   const [accentColor, setAccentColor] = useState("#00A9FF");
 
   const [data, setData] = useState({
-    banner:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg/1200px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu_%28cropped%29.jpg",
-    logo: "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt9beb50fc4d6cfd95/65132cf828dc21c7bca932c0/GOAL_-_Blank_WEB_-_Facebook_-_2023-09-26T201135.941.png?auto=webp&format=pjpg&width=3840&quality=60",
+    banner: false,
+    logo: false,
 
     owner: false,
   });
