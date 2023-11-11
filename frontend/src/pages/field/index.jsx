@@ -7,6 +7,7 @@ import SubscriptionModal from "../../components/modals/subscription";
 import NoLogo from "@/assets/user.png";
 import "./index.css";
 import DonateModal from "../../components/modals/donate";
+import TextContent from "./components/textContent";
 
 function Field() {
   const { id } = useParams();
@@ -105,7 +106,14 @@ function Field() {
               </button>
             ))}
           </div>
-          <div className="fieldContentsArea">yyy</div>
+          <div className="fieldContentsArea">
+            
+
+            <TextContent data={data} />
+            <TextContent data={data} />
+            <TextContent data={data} />
+            <TextContent data={data} />
+          </div>
         </div>
       </div>
     </div>

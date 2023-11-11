@@ -16,7 +16,7 @@ function SubscriptionModal() {
   return (
     <>
       <button className="fieldSubBtn" onClick={handleShow}>
-        Subscription
+        Subscribe
       </button>
 
       <Modal
@@ -27,7 +27,7 @@ function SubscriptionModal() {
         centered
       >
         <div className="fieldDetailModal">
-          <div className="fieldDetailTitle">Subscription</div>
+          <div className="fieldDetailTitle">Subscribe</div>
 
           <div className="subsDesc">
             All the content you create will be available to your subscribers.

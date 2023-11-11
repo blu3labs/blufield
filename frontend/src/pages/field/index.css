@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
+  padding-bottom: 1rem;
 }
 
 .fieldBanner {
@@ -63,8 +64,8 @@
 .fieldBody {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 1rem;
+  grid-template-columns: 4fr 7fr;
+  gap: 8px;
   margin-top: 1rem;
 }
 
@@ -96,6 +97,7 @@
   border: 1px solid var(--field-accent);
   border-radius: 8px;
   margin: 8px 0;
+  background: var(--first);
 }
 
 .fieldAboutTitle {
@@ -149,6 +151,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 16px;
+  margin-top: -42px;
 }
 
 .fieldRightTabMenus {
@@ -193,3 +196,16 @@
 .editBtn:hover {
   transform: scale(1.02);
 }
+
+
+.fieldContentsArea{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 0 8px;
+}
+
