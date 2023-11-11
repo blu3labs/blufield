@@ -21,12 +21,8 @@ const maxHeight = 600;
       .webp({ quality: 80 }) // Convert to WebP format
      .toBuffer()
     const filedata = buf
-    console.log(filedata);
-    console.log("checksum started...");
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
-    console.log(expectCheckSums);
     let name=  "images/" + timeStamps + generateString(10)+"."+file.mimetype.split("/")[1]
-    console.log(name)
     const imageTx = await client.object.createObject(
       {
         bucketName: "users",
