@@ -4,16 +4,29 @@ const { broadcast } = require("../utils/broadcast");
 const fs = require("fs");
 const axios = require("axios");
 const { getCheckSums } = require("@bnb-chain/greenfiled-file-handle");
-
+const sharp = require("sharp")
 async function pushImage(file, client) {
+  const maxWidth = 800;
+const maxHeight = 600;
+
   try {
     // save file use fs
     const timeStamps = new Date().getTime();
-    const filedata = Buffer.from(file.buffer.toString("utf8"));
+   const buf = await  sharp(file.buffer)
+      .resize(maxWidth, maxHeight, {
+        fit: 'inside',
+        withoutEnlargement: true,
+      })
+      .jpeg({ quality: 80, progressive: true }) // Progressive JPEGs
+      .webp({ quality: 80 }) // Convert to WebP format
+     .toBuffer()
+    const filedata = buf
     console.log(filedata);
     console.log("checksum started...");
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     console.log(expectCheckSums);
+    let name=  "images/" + timeStamps + generateString(10)+"."+file.mimetype.split("/")[1]
+    console.log(name)
     const imageTx = await client.object.createObject(
       {
         bucketName: "users",
@@ -21,7 +34,7 @@ async function pushImage(file, client) {
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
         fileType: file.mimetype.split("/")[1],
-        objectName: "images/" + timeStamps + file.originalname,
+        objectName: name,
         redundancyType: "REDUNDANCY_EC_TYPE",
         visibility: "VISIBILITY_TYPE_PUBLIC_READ",
       },
@@ -39,7 +52,7 @@ async function pushImage(file, client) {
     const uploadRes = await client.object.uploadObject(
       {
         bucketName: "users",
-        objectName: "images/" + timeStamps + file.originalname,
+        objectName: name,
         body: filedata,
         txnHash: txHash.transactionHash,
       },
@@ -56,9 +69,7 @@ async function pushImage(file, client) {
     return {
       url:
         allSps[0].endpoint +
-        "/view/users/images/" +
-        timeStamps +
-        file.originalname,
+        "/view/users/"+name
     };
   } catch (error) {
     console.log(error);
