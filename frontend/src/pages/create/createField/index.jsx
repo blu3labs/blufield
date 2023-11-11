@@ -8,9 +8,12 @@ import { api } from "../../../utils/api";
 import toast from "react-hot-toast";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import multiTxCreateBucket from "../../../utils/multiTx";
+import { useSigner } from "../../../utils/useSigner";
 function CreateField() {
+  const signer = useSigner();
   const navigate = useNavigate();
-  const { address } = useAccount();
+  const { address, connector } = useAccount();
   const [accentColor, setAccentColor] = useState("#00A9FF");
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
@@ -172,8 +175,8 @@ function CreateField() {
           opacity: loading.imageLoading || loading.uploadLoading ? "0.5" : "",
         }}
         disabled={loading.imageLoading || loading.uploadLoading}
-        onClick={() => {
-          handleSaveUser();
+        onClick={async () => {
+          multiTxCreateBucket("name", address, await connector?.getProvider());
         }}
       >
         {loading.imageLoading

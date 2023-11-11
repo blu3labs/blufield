@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import routes from "./routes";
 import { RouterProvider } from "react-router-dom";
@@ -6,20 +6,20 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { Buffer } from "buffer";
-import {
-  bsc,
-  bscTestnet,
-} from "wagmi/chains";
+import { bsc, bscTestnet } from "wagmi/chains";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import "./index.css";
 import "./reset.css";
 
+import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
+
+
+
 
 window.Buffer = Buffer;
 
 bscTestnet.name = "BSC Testnet";
-
 
 const { chains, publicClient } = configureChains(
   [bscTestnet],
