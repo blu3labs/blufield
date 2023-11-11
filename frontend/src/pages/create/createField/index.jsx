@@ -10,6 +10,9 @@ import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import multiTxCreateBucket from "../../../utils/multiTx";
 import { useSigner } from "../../../utils/useSigner";
+import { bluefieladdress, bluefieldAbi } from "../../../contract/bluefield";
+import { writeContract } from "../../../utils/writeContract";
+import { ethers } from "ethers";
 function CreateField() {
   const { chain } = useNetwork();
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -25,7 +28,7 @@ function CreateField() {
   const [github, setGithub] = useState(null);
   const [price, setPrice] = useState(null);
   const [about, setAbout] = useState(null);
-
+  const abi = ["function grant(address ,uint32 ,uint256 )"];
   useEffect(() => {
     document.documentElement.style.setProperty("--create-accent", accentColor);
   }, [accentColor]);
@@ -60,7 +63,7 @@ function CreateField() {
         setLoading({ uploadLoading: false, imageLoading: false });
         return;
       }
-      await multiTxCreateBucket(
+      const groupId = await multiTxCreateBucket(
         name,
         address,
         await connector?.getProvider(),
@@ -68,8 +71,22 @@ function CreateField() {
         chain?.id
       );
 
-      
       //web 3 area
+      const grantReturn = await writeContract({
+        signer: signer,
+        address: "0x50B3BF0d95a8dbA57B58C82dFDB5ff6747Cc1a9E",
+        abi: abi,
+        method: "grant",
+        args: [bluefieladdress[chain?.id], 4, "2000000000"],
+      });
+
+      const contractReturn = await writeContract({
+        signer: signer,
+        address: bluefieladdress[chain?.id],
+        abi: bluefieldAbi,
+        method: "registerField",
+        args: [name, groupId, ethers.utils.parseEther(price?.toString())],
+      });
 
       const { data: res } = await api.post("user", {
         name: name,

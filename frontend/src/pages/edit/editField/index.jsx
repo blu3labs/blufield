@@ -174,6 +174,7 @@ function EditField() {
           type="number"
           price={true}
           name="price"
+          disabled={true}
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           onKeyPress={(event) => {
