@@ -69,7 +69,7 @@ app.put("/user", async (req, res) => {
 
 app.post("/checksum", upload.single("file"), async (req, res) => {
   const file = req.file;
-
+  console.log(file,"file")
   const { expectCheckSums, contentLength } = await getCheckSums(
     Buffer.from(file.buffer.toString("utf8"))
   );
