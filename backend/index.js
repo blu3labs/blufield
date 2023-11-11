@@ -67,9 +67,9 @@ app.put("/user", async (req, res) => {
   res.status(response.status).json(response);
 });
 
-app.get("/checksum", async (req, res) => {
+app.post("/checksum", async (req, res) => {
   const data = req.body;
-  const { expectCheckSums, contentLength } = await getCheckSums(filedata);
+  const { expectCheckSums, contentLength } = await getCheckSums(data.buffer);
   return {
     expectCheckSums : expectCheckSums,
     contentLength : contentLength,
