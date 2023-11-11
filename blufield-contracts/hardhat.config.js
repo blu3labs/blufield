@@ -23,13 +23,13 @@ module.exports = {
     bsc: {
       url: "https://bsc-dataseed3.binance.org/",
       accounts: [
-        process.env.PV_KEY
+        process.env.PV_KEY, process.env.PV_KEY_2
       ],
     },
     bscTestnet: {
       url: "https://bsc-testnet.public.blastapi.io",
       accounts: [
-        process.env.PV_KEY
+        process.env.PV_KEY, process.env.PV_KEY_2
       ],
     },
   },
