@@ -8,6 +8,7 @@
   justify-content: flex-start;
   min-height: 100vh;
   padding-bottom: 1rem;
+  position: relative;
 }
 
 .fieldBanner {
@@ -21,6 +22,9 @@
   gap: 4px;
   border-bottom: 2px solid var(--field-accent);
   overflow: hidden;
+  position: sticky;
+  top: -180px;
+  z-index: 2;
 }
 
 .fieldBanner img {
@@ -28,6 +32,8 @@
   height: 100%;
   object-fit: cover;
 }
+
+
 
 .fieldTopArea {
   width: 100%;
@@ -39,6 +45,10 @@
   position: relative;
   padding: 0 16px 0 32px;
   margin-top: -80px;
+
+  position: sticky;
+    top: 40px;
+    z-index: 3;
 }
 
 .fieldLogo {
@@ -63,9 +73,11 @@
 
 .fieldBody {
   width: 100%;
-  display: grid;
-  grid-template-columns: 4fr 7fr;
-  gap: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   margin-top: 1rem;
 }
 
@@ -75,6 +87,10 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  position: sticky;
+  top: 166px;
+  width: 300px;
+
 }
 
 .fieldUserTitle {
@@ -109,7 +125,7 @@
   width: 100%;
   height: auto;
   text-align: justify;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
 }
 
@@ -121,7 +137,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .fieldSocials a {
@@ -144,14 +160,15 @@
 }
 
 .fieldRightArea {
-  width: 100%;
+  width: calc(100% - 316px);
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 16px;
-  margin-top: -42px;
+  margin-top: -58px;
+  background: var(--third);
 }
 
 .fieldRightTabMenus {
@@ -163,6 +180,11 @@
   justify-content: flex-start;
   border-bottom: 1px solid var(--second);
   padding-right: 16px;
+  position: sticky;
+  top: 120px;
+  background: var(--third);
+  z-index: 3;
+  padding-top: 1rem;
 }
 
 .fieldRightTabMenuItem {

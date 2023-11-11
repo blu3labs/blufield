@@ -37,7 +37,9 @@ function Field() {
           <img src={data?.banner} alt="banner" draggable="false" />
         )}
       </div>
+         
 
+          
       <div className="fieldTopArea">
         <div className="fieldLogo">
           {data?.logo !== "" && (
@@ -116,6 +118,10 @@ function Field() {
           </div>
         </div>
       </div>
+
+      
+
+
     </div>
   );
 }
