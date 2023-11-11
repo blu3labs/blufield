@@ -1,0 +1,245 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IBucketHub",
+  "sourceName": "@bnb-chain/greenfield-contracts/contracts/interface/IBucketHub.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "enum BucketStorage.BucketVisibilityType",
+              "name": "visibility",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "paymentAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "primarySpAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "primarySpApprovalExpiredHeight",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "primarySpSignature",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint64",
+              "name": "chargedReadQuota",
+              "type": "uint64"
+            },
+            {
+              "internalType": "bytes",
+              "name": "extraData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct BucketStorage.CreateBucketSynPackage",
+          "name": "createPackage",
+          "type": "tuple"
+        }
+      ],
+      "name": "createBucket",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "enum BucketStorage.BucketVisibilityType",
+              "name": "visibility",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "paymentAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "primarySpAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "primarySpApprovalExpiredHeight",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "primarySpSignature",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint64",
+              "name": "chargedReadQuota",
+              "type": "uint64"
+            },
+            {
+              "internalType": "bytes",
+              "name": "extraData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct BucketStorage.CreateBucketSynPackage",
+          "name": "createPackage",
+          "type": "tuple"
+        },
+        {
+          "internalType": "uint256",
+          "name": "callbackGasLimit",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "appAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "refundAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "enum PackageQueue.FailureHandleStrategy",
+              "name": "failureHandleStrategy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bytes",
+              "name": "callbackData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct CmnStorage.ExtraData",
+          "name": "extraData",
+          "type": "tuple"
+        }
+      ],
+      "name": "createBucket",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "deleteBucket",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "callbackGasLimit",
+          "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "appAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "refundAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "enum PackageQueue.FailureHandleStrategy",
+              "name": "failureHandleStrategy",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bytes",
+              "name": "callbackData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct CmnStorage.ExtraData",
+          "name": "extraData",
+          "type": "tuple"
+        }
+      ],
+      "name": "deleteBucket",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
