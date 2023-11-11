@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import WalletButton from "../walletButton";
-import Logo from "@/assets/iconLogo.png";
 import "./index.css";
 import { api } from "../../utils/api";
 
@@ -69,8 +68,7 @@ function Sidebar() {
     <div className="sidebar">
       <div className="sidebarTop">
         <Link to="/" className="sidebarHeader">
-          <img src={Logo} alt="logo" draggable="false" />
-          <span>Blufield</span>
+          Blufield
         </Link>
 
         <div className="sidebarBody">
@@ -96,16 +94,17 @@ function Sidebar() {
             <div className="sidebarFieldsTitle">Newest Fields</div>
 
             <div className="sidebarFieldsItems">
-              {fields && fields?.map((item, index) => (
-                <Link
-                  to={"/" + item.name}
-                  className="sidebarFieldItem"
-                  key={index}
-                >
-                  <img src={item.logo} alt="logo" draggable="false" />
-                  <span>{item.name}</span>
-                </Link>
-              ))}
+              {fields &&
+                fields?.map((item, index) => (
+                  <Link
+                    to={"/" + item.name}
+                    className="sidebarFieldItem"
+                    key={index}
+                  >
+                    <img src={item.logo} alt="logo" draggable="false" />
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@
   overflow: hidden;
   position: sticky;
   top: -180px;
-  z-index: 2;
+  z-index: 7;
 }
 
 .fieldBanner img {
@@ -47,7 +47,7 @@
   margin-top: -80px;
   position: sticky;
   top: 40px;
-  z-index: 3;
+  z-index: 7;
 }
 
 .fieldLogo {
@@ -182,7 +182,7 @@
   position: sticky;
   top: 120px;
   background: var(--third);
-  z-index: 3;
+  z-index: 6;
   padding-top: 1rem;
 }
 

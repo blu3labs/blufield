@@ -1,9 +1,13 @@
 import React from "react";
+import FieldMask from "@/components/fieldMask";
 import "./index.css";
 
-function AudioContent({ data }) {
+function AudioContent({ data, index }) {
   return (
     <div className="audioContent">
+      {
+        index % 2 === 0 && <FieldMask />
+      }
       <img src={data.banner} alt="banner" draggable="false" />
 
       <div className="audioContentInfo">

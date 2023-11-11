@@ -1,50 +1,64 @@
-import React from 'react'
-import { Helmet } from 'react-helmet'
-import { Link } from 'react-router-dom'
-import "./index.css"
-import SubscriptionModal from '../../components/modals/subscription'
-import DonateModal from '../../components/modals/donate'
+import React from "react";
+import { Helmet } from "react-helmet";
+import Video from "@/assets/video.jpeg";
+import Text from "@/assets/text.jpeg";
+import Audio from "@/assets/audio.jpeg";
+import "./index.css";
 
 function Home() {
+  let items = [
+    {
+      image: Text,
+      title: "Text",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    },
+    {
+      image: Audio,
+      title: "Audio",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    },
+    {
+      image: Video,
+      title: "Video",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+    },
+  ];
   return (
     <>
       <Helmet>
         <title>Home | Blufield</title>
       </Helmet>
 
-      <div className='homeWrapper'>
-      
-        <span>
-          Hello
-        </span>
+      <div className="homeWrapper">
+        <div className="homeHeader">
+         Blufield
+        </div>
+        {/* <div className="homeTitle">Lorem, ipsum dolor.</div> */}
+        <div className="homeSubtitle">
+          Lorem ipsum dolor sit amet consectetur adipisicing.
+        </div>
 
+        <div className="homeItems">
+          {items.map((item, index) => (
+            <div className="homeItem" key={index}>
+              <div className="homeItemTitle">{item.title}</div>
+              <img src={item.image} alt="" draggable={false} />
+              <div className="homeItemDesc">{item.desc}</div>
+            </div>
+          ))}
+        </div>
 
-        <Link to='/create/field'>
-          Create Field
-        </Link>
-
-        <Link to='/edit/field'>
-          Edit Field
-        </Link>
-
-        <Link to="/create/text">
-          Create Text
-        </Link>
-
-        <Link to="/create/video">
-          Create Video
-        </Link>
-
-        <Link to="/create/audio">
-          Create Audio
-        </Link>
-
-        <SubscriptionModal />
-
-        <DonateModal />
+        <div className="homeSocials">
+          <a href="https://twitter.com/blu3labs" target="_blank" rel="noopener noreferrer">
+            Twitter 
+          </a>
+          <a href="mailto:contact@blu3.dev" target="_blank" rel="noopener noreferrer">
+            Email
+          </a>
+        </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -92,3 +92,45 @@
   font-weight: 500;
   color: var(--text);
 }
+
+
+.ant-dropdown-menu{
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  margin-left: 1rem ;
+}
+
+.ant-dropdown-menu-item{
+  padding: 0 !important;
+  margin: 8px 0 !important;
+}
+
+.dropdownItems{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.dropItem{
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: auto;
+  padding: 4px 0;
+}
+.dropItem:hover{
+  color: var(--text);
+}
+
+.dropdownIcon{
+  font-size: 24px;
+  color: var(--text);
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child{
+  background: none !important;
+}

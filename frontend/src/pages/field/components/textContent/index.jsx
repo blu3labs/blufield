@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import FieldMask from "@/components/fieldMask";
 import "./index.css";
 
-function TextContent({ data }) {
+function TextContent({ data, index }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="fieldTextContent" onClick={() => setOpen(!open)}>
+    <div className="fieldTextContent">
+      {index % 2 === 0 && <FieldMask />}
       <img src={data.banner} alt="banner" draggable="false" />
       <div className="fieldTextContentTitle">Lorem ipsum dolor sit amet.</div>
       <div className="fieldTextContentShortText">
@@ -22,6 +23,10 @@ function TextContent({ data }) {
           voluptatem. Nam, aspernatur laboriosam.
         </div>
       )}
+
+      <button className="fieldTextContentBtn" onClick={() => setOpen(!open)}>
+        {open ? "Less" : "Show"}
+      </button>
       <div className="fieldTextContentDate">11 November, 23:40</div>
     </div>
   );

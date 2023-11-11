@@ -29,7 +29,7 @@ function Field() {
     document.documentElement.style.setProperty("--field-accent", accentColor);
   }, [accentColor]);
 
-  let tabMenuItems = ["All Posts", "Texts", "Videos", "Audios"];
+  let tabMenuItems = ["All Posts", "Texts", "Audios", "Videos"];
 
   const [activeTab, setActiveTab] = useState("All Posts");
   const [fieldDetails, setFieldDetails] = useState();
@@ -139,11 +139,11 @@ function Field() {
               .fill()
               .map((item, index) =>
                 index % 3 === 0 ? (
-                  <TextContent data={data} key={index} />
+                  <TextContent data={data} key={index} index={index}/>
                 ) : index % 3 === 1 ? (
-                  <VideoContent data={data} key={index} />
+                  <VideoContent data={data} key={index} index={index}/>
                 ) : (
-                  <AudioContent data={data} key={index} />
+                  <AudioContent data={data} key={index} index={index}/>
                 )
               )}
           </div>

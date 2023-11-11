@@ -1,10 +1,121 @@
 .homeWrapper {
-  width: 95%;
-  max-width: 768px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 72px;
+  font-weight: 700;
+  font-family: "Agbalumo", sans-serif;
+  letter-spacing: 4px;
+}
+
+
+
+
+
+
+.homeTitle {
+  width: 100%;
+  text-align: center;
+  color: var(--text);
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.homeSubtitle {
+  width: 100%;
+  text-align: center;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.homeItems {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   margin-top: 2rem;
 }
 
+.homeItem {
+  width: 100%;
+  height: auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
 
+.homeItem:hover{
+  transform: scale(1.02);
+}
+
+.homeItem img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 2/3;
+}
+
+.homeItemDesc {
+  position: absolute;
+  bottom: 0;
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 500;
+  /* text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5); */
+  background: #ffffffa2;
+}
+
+.homeItemTitle {
+  position: absolute;
+  top: 0;
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+  color: var(--first);
+  font-size: 36px;
+  font-weight: 500;
+  /* text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5); */
+  background: #00000020;
+}
+
+.homeSocials {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.homeSocials a {
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.homeSocials a:hover {
+  text-decoration: underline;
+}

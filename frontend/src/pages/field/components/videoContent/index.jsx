@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
 import VideoPlayIcon from "@/assets/playIcon.png";
+import FieldMask from "@/components/fieldMask";
 import "./index.css";
 
-function VideoContent({ data }) {
+function VideoContent({ data, index }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCancel = () => {
@@ -17,6 +18,9 @@ function VideoContent({ data }) {
   return (
     <>
       <div className="videoContent">
+        {
+          index % 2 === 0 && <FieldMask />
+        }
         <button className="videoContentBanner" onClick={handleShow}>
           <img src={data.banner} alt="banner" draggable="false" />
           <img src={VideoPlayIcon} alt="play" draggable="false" />
