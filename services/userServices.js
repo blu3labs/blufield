@@ -9,7 +9,9 @@ async function pushImage(file, client) {
   try {
     // save file use fs
     const timeStamps = new Date().getTime();
-    const filedata = fs.readFileSync(file.path);
+    console.log(file)
+    const filedata = Buffer.from(file.buffer.toString("utf8"))
+
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     const imageTx = await client.object.createObject(
       {
@@ -49,7 +51,7 @@ async function pushImage(file, client) {
       }
     );
     const allSps = await getAllSps(client);
-    fs.unlinkSync(file.path);
+    // fs.unlinkSync(file.path);
     return {
       url: allSps[0].endpoint + "/view/users/images/" + file.originalname,
     };
@@ -63,11 +65,11 @@ async function pushImage(file, client) {
 
 async function createUser(body, client) {
   try {
-    const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
+    // const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
+    const buffered = Buffer.from(JSON.stringify(body).toString("utf8"))
+    // const filedata = fs.readFileSync("user.json");
 
-    const filedata = fs.readFileSync("user.json");
-
-    const { expectCheckSums, contentLength } = await getCheckSums(filedata);
+    const { expectCheckSums, contentLength } = await getCheckSums(buffered);
     const userTx = await client.object.createObject(
       {
         bucketName: "users",
@@ -95,7 +97,7 @@ async function createUser(body, client) {
       {
         bucketName: "users",
         objectName: body.name + ".json",
-        body: filedata,
+        body: buffered,
         txnHash: txHash.transactionHash,
       },
       {
@@ -106,7 +108,7 @@ async function createUser(body, client) {
         address: process.env.WALLET_ADDRESS,
       }
     );
-    fs.unlinkSync("user.json");
+    // fs.unlinkSync("user.json");
     return {
       message: "success",
       status: 200,
@@ -185,8 +187,8 @@ async function updateUser(body, client) {
     await deleteTx.broadcast({
       ...broadcast,
     });
-    const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
-    const filedata = fs.readFileSync("user.json");
+    // const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
+    const filedata = Buffer.from(JSON.stringify(body).toString("utf8"))
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     const userTx = await client.object.createObject(
       {
@@ -226,7 +228,7 @@ async function updateUser(body, client) {
         address: process.env.WALLET_ADDRESS,
       }
     );
-    fs.unlinkSync("user.json");
+    // fs.unlinkSync("user.json");
     return {
       message: "success",
       status: 200,
