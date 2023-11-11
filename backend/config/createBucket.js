@@ -27,7 +27,7 @@ async function createBucket(client) {
     const tx = await createBucketTx.broadcast({
       ...broadcast,
     });
-
+    console.log("restart")
     const imagesFolder = await client.object.createFolder(
       {
         bucketName: "profiles",
