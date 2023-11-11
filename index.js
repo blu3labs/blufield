@@ -15,7 +15,7 @@ app.use(
 );
 app.use(cors());
 //services
-const { pushImage, createUser, getUser,getAllUser } = require("./services/userServices");
+const { pushImage, createUser, getUser,getAllUser, updateUser } = require("./services/userServices");
 
 async function checkBucket() {
   try {
@@ -27,7 +27,6 @@ async function checkBucket() {
   }
 }
 
-checkBucket();
 
 app.post("/img", upload.single("file"), async (req, res) => {
   const file = req.file;
@@ -55,9 +54,15 @@ app.get("/user/:name", async (req, res) => {
   res.status(response.status).json(response);
 });
 
+app.put("/user", async (req, res) => {
+  const user = req.body;
+  const response = await updateUser(user, client);
+  res.status(response.status).json(response);
+});
 
 const port = process.env.PORT || API_PORT;
 
+checkBucket();
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

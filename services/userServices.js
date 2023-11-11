@@ -33,7 +33,6 @@ async function pushImage(file, client) {
     const txHash = await imageTx.broadcast({
       ...broadcast,
     });
-    console.log(txHash);
     const uploadRes = await client.object.uploadObject(
       {
         bucketName: "users",
@@ -49,7 +48,6 @@ async function pushImage(file, client) {
         address: process.env.WALLET_ADDRESS,
       }
     );
-    console.log(uploadRes);
     const allSps = await getAllSps(client);
     fs.unlinkSync(file.path);
     return {
@@ -65,15 +63,11 @@ async function pushImage(file, client) {
 
 async function createUser(body, client) {
   try {
-    console.log(body);
     const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
 
     const filedata = fs.readFileSync("user.json");
-    console.log(filedata);
 
-    console.log("check sum started ismail....");
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
-    console.log(expectCheckSums, contentLength);
     const userTx = await client.object.createObject(
       {
         bucketName: "users",
@@ -93,11 +87,9 @@ async function createUser(body, client) {
         address: process.env.WALLET_ADDRESS,
       }
     );
-    console.log(userTx);
     const txHash = await userTx.broadcast({
       ...broadcast,
     });
-    console.log(txHash);
 
     const uploadRes = await client.object.uploadObject(
       {
@@ -114,14 +106,13 @@ async function createUser(body, client) {
         address: process.env.WALLET_ADDRESS,
       }
     );
-    console.log(uploadRes);
     fs.unlinkSync("user.json");
     return {
       message: "success",
       status: 200,
     };
   } catch (error) {
-    console.log(error, "error");
+    console.log(error);
 
     return {
       message: error,
@@ -133,7 +124,6 @@ async function createUser(body, client) {
 async function getAllUser(client) {
   try {
     const sps = await getAllSps(client);
-    console.log(sps);
     const getAllBucketIds = await client.object.listObjects({
       bucketName: "users",
       endpoint: sps[0].endpoint,
@@ -185,9 +175,75 @@ async function getUser(name, client) {
   }
 }
 
+async function updateUser(body, client) {
+  try {
+    const deleteTx = await client.object.deleteObject({
+      bucketName: "users",
+      objectName: body.name + ".json",
+      operator: process.env.WALLET_ADDRESS,
+    });
+    await deleteTx.broadcast({
+      ...broadcast,
+    });
+    const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
+    const filedata = fs.readFileSync("user.json");
+    const { expectCheckSums, contentLength } = await getCheckSums(filedata);
+    const userTx = await client.object.createObject(
+      {
+        bucketName: "users",
+        contentLength: contentLength,
+        creator: process.env.WALLET_ADDRESS,
+        expectCheckSums: JSON.parse(expectCheckSums),
+        fileType: "json",
+        objectName: body.name + ".json",
+        redundancyType: "REDUNDANCY_EC_TYPE",
+        visibility: "VISIBILITY_TYPE_PUBLIC_READ",
+      },
+      {
+        type: "ECDSA",
+        privateKey: "0x" + process.env.PRIVATE_KEY,
+        domain: generateString(10),
+        seed: generateString(10),
+        address: process.env.WALLET_ADDRESS,
+      }
+    );
+    const txHash = await userTx.broadcast({
+      ...broadcast,
+    });
+
+    const uploadRes = await client.object.uploadObject(
+      {
+        bucketName: "users",
+        objectName: body.name + ".json",
+        body: filedata,
+        txnHash: txHash.transactionHash,
+      },
+      {
+        type: "ECDSA",
+        privateKey: "0x" + process.env.PRIVATE_KEY,
+        domain: generateString(10),
+        seed: generateString(10),
+        address: process.env.WALLET_ADDRESS,
+      }
+    );
+    fs.unlinkSync("user.json");
+    return {
+      message: "success",
+      status: 200,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+      status: 500,
+    };
+  }
+}
+
 module.exports = {
   createUser,
   pushImage,
   getUser,
   getAllUser,
+  updateUser,
 };
