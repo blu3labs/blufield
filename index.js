@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 const { client } = require("./config/client");
 const { createBucket } = require("./config/createBucket");
 const app = express();

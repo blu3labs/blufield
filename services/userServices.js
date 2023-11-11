@@ -9,10 +9,11 @@ async function pushImage(file, client) {
   try {
     // save file use fs
     const timeStamps = new Date().getTime();
-    console.log(file)
-    const filedata = Buffer.from(file.buffer.toString("utf8"))
-
+    const filedata = Buffer.from(file.buffer.toString("utf8"));
+    console.log(filedata);
+    console.log("checksum started...");
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
+    console.log(expectCheckSums);
     const imageTx = await client.object.createObject(
       {
         bucketName: "users",
@@ -53,7 +54,11 @@ async function pushImage(file, client) {
     const allSps = await getAllSps(client);
     // fs.unlinkSync(file.path);
     return {
-      url: allSps[0].endpoint + "/view/users/images/" + file.originalname,
+      url:
+        allSps[0].endpoint +
+        "/view/users/images/" +
+        timeStamps +
+        file.originalname,
     };
   } catch (error) {
     console.log(error);
@@ -66,7 +71,7 @@ async function pushImage(file, client) {
 async function createUser(body, client) {
   try {
     // const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
-    const buffered = Buffer.from(JSON.stringify(body).toString("utf8"))
+    const buffered = Buffer.from(JSON.stringify(body).toString("utf8"));
     // const filedata = fs.readFileSync("user.json");
 
     const { expectCheckSums, contentLength } = await getCheckSums(buffered);
@@ -188,7 +193,7 @@ async function updateUser(body, client) {
       ...broadcast,
     });
     // const writeFile = fs.writeFileSync("user.json", JSON.stringify(body));
-    const filedata = Buffer.from(JSON.stringify(body).toString("utf8"))
+    const filedata = Buffer.from(JSON.stringify(body).toString("utf8"));
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     const userTx = await client.object.createObject(
       {
