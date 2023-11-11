@@ -59,6 +59,7 @@ async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsy
     principal,
   });
 
+
   const { simulate, broadcast } = await client.txClient.multiTx([
     createBucket,
     createGroupTx,
