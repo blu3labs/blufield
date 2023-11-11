@@ -92,6 +92,7 @@ async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsy
     gasPrice: 5000000000,
   })
 
+  return groupId;
 
 }
 
