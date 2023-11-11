@@ -265,8 +265,15 @@ export const CreateData = async (
 
     // upload audio
     // formt data
+    let buffer = await data.audio.arrayBuffer()
+
+ 
+
     const formData = new FormData();
-    formData.append("file", data.audio);
+    formData.append("file",  new Blob([buffer], {
+      type:"audio/wav",
+    }));
+
     const audioResponse = await api.post("/checksums/audio", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -279,11 +286,11 @@ export const CreateData = async (
         contentLength: contentResponse.data.contentLength,
         creator: address,
         expectCheckSums: JSON.parse(contentResponse.data.expectCheckSums),
-        fileType: data.audio.type.split("/")[1].replace(/x\-/g, ""),
+        fileType: "wav",
         objectName:
           folderName +
           "/audio." +
-          data.audio.type.split("/")[1].replace(/x\-/g, ""),
+          data.audio.type.split("/")[1],
         redundancyType: "REDUNDANCY_EC_TYPE",
         visibility: data.visibility,
       },
@@ -300,19 +307,28 @@ export const CreateData = async (
     const tx = await multitx.broadcast({
       ...broadcasting,
     });
+  
+  
+
+    console.log("buff ", buffer)
+    try {
+      let newBuffered = Buffer.from(buffer.toString("utf8"))
     const audioUpload = await client.object.uploadObject(
       {
         bucketName: bucketName,
         objectName:
           folderName +
           "/audio." +
-          data.audio.type.split("/")[1].replace(/x\-/g, ""),
-        body: Buffer.from(data.audio.toString("utf8")),
+          data.audio.type.split("/")[1],
+        body: newBuffered,
         txnHash: tx.transactionHash,
       },
       signingData
     );
-
+    console.log(audioUpload, " audio upload");
+    }catch(err){
+      console.log(err)
+    }
     console.log(tx, " tx");
 
     // upload audio$
