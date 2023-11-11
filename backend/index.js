@@ -69,7 +69,17 @@ app.put("/user", async (req, res) => {
 
 app.post("/checksums", async (req, res) => {
   const body = req.body;
+  console.log(body);
   const buffered = Buffer.from(JSON.stringify(body).toString("utf8"));
+  const { expectCheckSums, contentLength } = await getCheckSums(buffered);
+  res.json({ expectCheckSums, contentLength });
+});
+
+app.post("/checksums/audio", upload.single("file"), async (req, res) => {
+  const file = req.file;
+  console.log(file,"file");
+  const buffered = Buffer.from(file.buffer.toString("utf8"));
+  console.log(buffered,"buffered");
   const { expectCheckSums, contentLength } = await getCheckSums(buffered);
   res.json({ expectCheckSums, contentLength });
 });

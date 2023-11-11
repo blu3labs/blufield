@@ -45,7 +45,6 @@ function CreateAudio() {
 
   const createAudio = async () => {
     const bannerUrl = await uploadPhoto(banner);
-    console.log(visibility)
     const d = await CreateData(
       "testfrombackaf",
       address,
