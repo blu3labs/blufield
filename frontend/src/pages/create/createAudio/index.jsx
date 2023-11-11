@@ -14,6 +14,7 @@ function CreateAudio() {
 
   console.log(audio);
 
+
   return (
     <div className="createPost">
       <div className="createPostTitle">Create Audio</div>
@@ -24,9 +25,8 @@ function CreateAudio() {
           setImage={setBanner}
           className="createPostAudioBanner"
           iconClassName="createPostUploadIcon"
-          text="Upload Banner"
+          text="Upload Thumbnail"
         />
-
         <div className="createPostAudioInputs">
           <Input
             title="Title"
@@ -43,14 +43,13 @@ function CreateAudio() {
             value={shortText}
             onChange={(e) => setShortText(e.target.value)}
           />
-
           <UploadAudio
-            audio={audio}
-            setAudio={setAudio}
-            className="createPostAudio"
-            iconClassName="createPostAudioUploadIcon"
-            text="Upload Audio"
-          />
+          audio={audio}
+          setAudio={setAudio}
+          className="createPostAudio"
+          iconClassName="createPostAudioUploadIcon"
+          text="Upload Audio"
+        />
 
           <SelectBox
             title="Visibility"

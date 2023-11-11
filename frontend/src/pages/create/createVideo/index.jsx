@@ -18,13 +18,26 @@ function CreateVideo() {
     <div className="createPost">
       <div className="createPostTitle">Create Video</div>
 
+
+
+<div className="createPostVideoTopWrapper">
+
       <UploadVideo
         video={video}
         setVideo={setVideo}
         className="createPostBanner"
         iconClassName="createPostUploadIcon"
         text="Upload Video"
-      />
+        />
+
+<UploadImage
+        image={banner}
+        setImage={setBanner}
+        className="createPostBanner"
+        iconClassName="createPostUploadIcon"
+        text="Upload Thumbnail"
+        />
+        </div>
 
       <Input
         title="Title"
@@ -42,13 +55,7 @@ function CreateVideo() {
         onChange={(e) => setShortText(e.target.value)}
       />
 
-      <UploadImage
-        image={banner}
-        setImage={setBanner}
-        className="createPostBanner"
-        iconClassName="createPostUploadIcon"
-        text="Upload Banner"
-      />
+    
 
 <SelectBox 
         title="Visibility"

@@ -60,9 +60,9 @@ function UploadVideo({ video, setVideo, className, text, iconClassName }) {
           draggable="false"
           controls
           controlsList="nodownload"
-          autoPlay
-          loop
-          muted
+          // autoPlay
+          // loop
+          // muted
         />
       ) : isUploading ? (
         <span>loading...</span>

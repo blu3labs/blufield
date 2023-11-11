@@ -16,6 +16,13 @@
 }
 
 
+.createPostVideoTopWrapper{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
 .createPostBanner{
     background: var(--first);
     width: 100%;
@@ -30,6 +37,7 @@
     margin-bottom: 16px;
     border-radius: 4px;
     border: 1px solid var(--third);
+    aspect-ratio: 16/9;
 }
 
 .createPostBanner img{

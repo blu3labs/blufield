@@ -63,9 +63,9 @@ function UploadAudio({ audio, setAudio, className, text, iconClassName }) {
           src={typeof audio === "string" ? audio : URL.createObjectURL(audio)}
           alt="audio"
           draggable="false"
-          autoPlay
-          loop
-          muted
+          // autoPlay
+          // loop
+          // muted
           controls
           controlsList="nodownload"
         />
