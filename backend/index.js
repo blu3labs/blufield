@@ -67,16 +67,11 @@ app.put("/user", async (req, res) => {
   res.status(response.status).json(response);
 });
 
-app.post("/checksum", upload.single("file"), async (req, res) => {
-  const file = req.file;
-
-  const { expectCheckSums, contentLength } = await getCheckSums(
-    Buffer.from(file.buffer.toString("utf8"))
-  );
-  return {
-    expectCheckSums: expectCheckSums,
-    contentLength: contentLength,
-  };
+app.post("/checksums", async (req, res) => {
+  const body = req.body;
+  const buffered = Buffer.from(JSON.stringify(body).toString("utf8"));
+  const { expectCheckSums, contentLength } = await getCheckSums(buffered);
+  res.json({ expectCheckSums, contentLength });
 });
 
 const port = process.env.PORT || API_PORT;
