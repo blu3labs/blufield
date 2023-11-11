@@ -63,10 +63,10 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
         
         },signingData)
         
-      const tx =   await folder.broadcast({
-     ...broadcasting
+    //   const tx =   await folder.broadcast({
+    //  ...broadcasting
 
-        })
+    //     })
         
         const metadataForUs = {
             userAddress: address,
@@ -78,6 +78,12 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
         // create metadata.
 
         const metadataResponse  = await api.post("/checksums", metadataForUs, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        
+        })
+        const contentResponse  = await api.post("/checksums", data, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -96,16 +102,55 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
               },
              signingData
         )
-       const txMeta=  await metadataObject.broadcast({
+
+        const userTx = await client.object.createObject(
+            {
+              bucketName: bucketName,
+              contentLength: contentResponse.data.contentLength   ,
+              creator: address,
+              expectCheckSums: JSON.parse(contentResponse.data.expectCheckSums),
+              fileType: "json",
+              objectName: folderName+"/content.json",
+              redundancyType: "REDUNDANCY_EC_TYPE",
+              visibility: data.visibility,
+            },
+           signingData
+          );
+
+          const multitx = await client.txClient.multiTx([
+            folder,
+            metadataObject,
+            userTx
+        
+          
+          ])
+         const txMultiCreate = await   multitx.broadcast({
             ...broadcasting
-        })
+          })
+    //    const txMeta=  await metadataObject.broadcast({
+    //         ...broadcasting
+    //     })
+
+    console.log("txxxx ", txMultiCreate)
+    const filedata = Buffer.from(JSON.stringify(data).toString("utf8"));
         const metadatafile = Buffer.from(JSON.stringify(metadataForUs).toString("utf8"));
+
+        const uploadRes = await client.object.uploadObject(
+            {
+              bucketName: bucketName,
+              objectName: folderName+"/content.json",
+              body: filedata,
+              txnHash: txMultiCreate.transactionHash,
+            },
+            signingData
+          );
+  
         const metadataUpload = await client.object.uploadObject(
             {
               bucketName: bucketName,
               objectName: folderName+"/metadata.json",
               body: metadatafile,
-              txnHash: txMeta.transactionHash,
+              txnHash: txMultiCreate.transactionHash,
             },
             signingData
           );
@@ -120,52 +165,31 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
         // uppload banner
         console.log(address, signer, switchNetworkAsync, chain)
         console.log("auth",auth)
-        const filedata = Buffer.from(JSON.stringify(data).toString("utf8"));
+
         // const { expectCheckSums, contentLength } = await getCheckSums(filedata);
 
   
 
-        const req  = await api.post("/checksums", data, {
-            headers: {
-                "Content-Type": "application/json"
-            }
+        // const req  = await api.post("/checksums", data, {
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
         
-        })
-        console.log(req, "requesttttt")
+        // })
+
        
         
           console.log("signnnnn")
-        const userTx = await client.object.createObject(
-          {
-            bucketName: bucketName,
-            contentLength: req.data.contentLength   ,
-            creator: address,
-            expectCheckSums: JSON.parse(req.data.expectCheckSums),
-            fileType: "json",
-            objectName: folderName+"/content.json",
-            redundancyType: "REDUNDANCY_EC_TYPE",
-            visibility: data.visibility,
-          },
-         signingData
-        );
-        const txHash = await userTx.broadcast({denom:"BNB",
+      
+    //     const txHash = await userTx.broadcast({denom:"BNB",
     
-    gasLimit:1000000,
-    gasPrice:5000000000,
-    granter: address,
-    payer: address
-    })
+    // gasLimit:1000000,
+    // gasPrice:5000000000,
+    // granter: address,
+    // payer: address
+    // })
     
-        const uploadRes = await client.object.uploadObject(
-          {
-            bucketName: bucketName,
-            objectName: folderName+"/content.json",
-            body: filedata,
-            txnHash: txHash.transactionHash,
-          },
-          signingData
-        );
-
+      
 
 
         // update partial part of metadata
