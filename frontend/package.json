@@ -16,7 +16,7 @@
     "@bnb-chain/greenfiled-file-handle": "^1.0.0",
     "@rainbow-me/rainbowkit": "^1.0.11",
     "antd": "^5.11.0",
-    "axios": "^1.6.0",
+    "axios": "^1.6.1",
     "bignumber.js": "^9.1.2",
     "buffer": "^6.0.3",
     "ethers": "5.7",

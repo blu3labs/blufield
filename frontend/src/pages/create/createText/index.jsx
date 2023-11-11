@@ -28,7 +28,7 @@ function CreateText() {
     await getEddsaCompressedPublicKey("foo")
     console.log(await connector.getProvider())
     const d = await CreateData(
-      "texts",
+      "testfrombackaf",
       address,
       await connector.getProvider(),
       chain.id,
