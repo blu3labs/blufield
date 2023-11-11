@@ -7,9 +7,9 @@ import {
 import { client } from "./client";
 import { getOffchainAuthKeys } from "./auth";
 
-async function multiTxCreateBucket(bucketName, address, signer) {
-    console.log(signer, " signer")
-  const auth = await getOffchainAuthKeys(address, signer);
+async function multiTxCreateBucket(bucketName, address, signer, switchNetworkAsync,chain) {
+
+  const auth = await getOffchainAuthKeys(address, signer,switchNetworkAsync,chain);
 
   const signingData = {
     type: "EDDSA",
@@ -68,7 +68,6 @@ async function multiTxCreateBucket(bucketName, address, signer) {
   const { simulate, broadcast } = await client.txClient.multiTx([
     createBucket,
     createGroupTx,
-
     policyTx,
   ]);
 

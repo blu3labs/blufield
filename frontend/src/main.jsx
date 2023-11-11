@@ -11,18 +11,37 @@ import { bsc, bscTestnet } from "wagmi/chains";
 import "@rainbow-me/rainbowkit/styles.css";
 import "./index.css";
 import "./reset.css";
-
+import { Greenfield } from "./utils/greenfieldInfo";
 import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
-
-
-
 
 window.Buffer = Buffer;
 
 bscTestnet.name = "BSC Testnet";
 
+const greenfiels = {
+  id: Greenfield.GREEN_CHAIN_ID,
+  name: "Greenfield",
+  network: "Greenfield",
+  iconUrl: bscTestnet.iconUrl,
+  iconBackground: "#fff",
+  nativeCurrency: {
+    decimals: 18,
+    name: "BNB",
+    symbol: "BNB",
+  },
+  rpcUrls: {
+    public: { http: [Greenfield.GREEN_CHAIN_NAME] },
+    default: { http: [Greenfield.GREEN_CHAIN_NAME] },
+  },
+  blockExplorers: {
+    default: { name: "GreenfieldScan", url: "https://testnet.greenfieldscan.com/" },
+    etherscan: { name: "GreenfieldScan", url: "https://testnet.greenfieldscan.com/" },
+  },
+  testnet: true,
+};
+
 const { chains, publicClient } = configureChains(
-  [bscTestnet],
+  [bscTestnet,greenfiels],
   [publicProvider()]
 );
 

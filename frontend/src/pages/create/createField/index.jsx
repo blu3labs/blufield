@@ -6,11 +6,13 @@ import Textarea from "@/ui/textarea";
 import "./index.css";
 import { api } from "../../../utils/api";
 import toast from "react-hot-toast";
-import { useAccount } from "wagmi";
+import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import multiTxCreateBucket from "../../../utils/multiTx";
 import { useSigner } from "../../../utils/useSigner";
 function CreateField() {
+  const { chain } = useNetwork();
+  const { switchNetworkAsync } = useSwitchNetwork();
   const signer = useSigner();
   const navigate = useNavigate();
   const { address, connector } = useAccount();
@@ -176,7 +178,13 @@ function CreateField() {
         }}
         disabled={loading.imageLoading || loading.uploadLoading}
         onClick={async () => {
-          multiTxCreateBucket("name", address, await connector?.getProvider());
+          multiTxCreateBucket(
+            "name",
+            address,
+            await connector?.getProvider(),
+            switchNetworkAsync,
+            chain?.id
+          );
         }}
       >
         {loading.imageLoading
