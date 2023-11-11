@@ -46,6 +46,7 @@ function CreateText() {
     );
   };
 
+ 
   const uploadPhoto = async (img) => {
     try {
       const formData = new FormData();
