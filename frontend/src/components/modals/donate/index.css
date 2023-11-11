@@ -1,3 +1,18 @@
+.fieldDonateBtn {
+    align-self: center;
+    width: 100%;
+    background: var(--field-accent);
+    color: #fff;
+    border-radius: 8px;
+    height: 32px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .fieldDonateBtn:hover {
+    transform: scale(1.02);
+  }
+
 .donateInputWrapper{
     width: 100%;
     height: auto;

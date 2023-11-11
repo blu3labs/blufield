@@ -53,7 +53,7 @@ function DonateModal() {
 
   return (
     <>
-      <button className="fieldSubBtn" onClick={handleShow}>
+      <button className="fieldDonateBtn" onClick={handleShow}>
         Donate
       </button>
 

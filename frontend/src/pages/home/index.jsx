@@ -42,7 +42,6 @@ function Home() {
         <SubscriptionModal />
 
         <DonateModal />
-
       </div>
     </>
   )
