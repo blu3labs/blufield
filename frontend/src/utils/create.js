@@ -19,6 +19,7 @@ export const CreateData = async (bucketName, address, signer, switchNetworkAsync
         // create object
 
         const client = client
+        // uppload banner
         const auth = getOffchainAuthKeys(address, signer, switchNetworkAsync)
         const filedata = Buffer.from(JSON.stringify(data).toString("utf8"));
         const { expectCheckSums, contentLength } = await getCheckSums(filedata);
@@ -55,6 +56,8 @@ export const CreateData = async (bucketName, address, signer, switchNetworkAsync
           },
           signingData
         );
+
+        
 
         // update partial part of metadata
 

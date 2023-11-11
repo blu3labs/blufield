@@ -7,6 +7,7 @@ import SelectBox from "../../../ui/selectBox";
 import { CreateData } from "../../../utils/create";
 import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import { useSigner } from "../../../utils/useSigner";
 
 function CreateText() {
   const [banner, setBanner] = useState(null);
