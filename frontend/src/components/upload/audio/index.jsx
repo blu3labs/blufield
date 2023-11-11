@@ -21,7 +21,8 @@ function UploadAudio({ audio, setAudio, className, text, iconClassName }) {
       fileExtension !== "aac" &&
       fileExtension !== "alac" &&
       fileExtension !== "aiff" &&
-      fileExtension !== "dsd"
+      fileExtension !== "dsd" && 
+      fileExtension !== "m4a"
     ) {
       toast.error("Please upload a valid audio.");
       return;

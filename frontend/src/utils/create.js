@@ -281,13 +281,32 @@ export const CreateData = async (bucketName, address, signer,chain, switchNetwor
         },
        signingData
       );
+
+
+
       const multitx = await client.txClient.multiTx([
         folder,
         metadataObject,
-        userTx
+        userTx,
+        audioTx
     
       
       ])
+      const tx = await multitx.broadcast({
+        ...broadcasting
+      })
+   const audioUpload = await client.object.uploadObject(
+            {
+              bucketName: bucketName,
+              objectName: folderName+"/audio."+data.audio.type.split("/")[1].replace(/x\-/g,""),
+              body: Buffer.from(data.audio),
+              txnHash: tx.transactionHash,
+            },
+            signingData
+          );
+  
+    
+      console.log(tx," tx")
 
       // upload audio$
 
