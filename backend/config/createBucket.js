@@ -8,7 +8,7 @@ async function createBucket(client) {
 
     const createBucketTx = await client.bucket.createBucket(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         creator: process.env.WALLET_ADDRESS,
         visibility: "VISIBILITY_TYPE_PUBLIC_READ",
         spInfo: {
@@ -30,7 +30,7 @@ async function createBucket(client) {
     console.log("restart")
     const imagesFolder = await client.object.createFolder(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         creator: process.env.WALLET_ADDRESS,
         objectName: "images/",
       },
