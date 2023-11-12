@@ -6,6 +6,7 @@ import axios from "axios";
 import { client } from "../../../../utils/client";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import { getOffchainAuthKeys } from "../../../../utils/auth";
+import moment from "moment"
 function TextContent({ data, index, content }) {
   const { address, connector } = useAccount();
   const { chain } = useNetwork();
@@ -82,7 +83,10 @@ function TextContent({ data, index, content }) {
       >
         {open ? "Less" : "Show"}
       </button>
-      <div className="fieldTextContentDate">11 November, 23:40</div>
+      <div className="fieldTextContentDate">
+        {" "}
+        {moment(data.created_date).format("DD MMMMM YYYY, HH:mm")}
+      </div>
     </div>
   );
 }

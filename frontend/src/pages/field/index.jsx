@@ -45,7 +45,7 @@ function Field() {
       console.log(error);
     }
   };
-  const [posts, setPosts] = useState();
+  const [userPosts, setPosts] = useState();
   const fetchPosts = async () => {
     try {
       const sps = await getAllSps(client);
@@ -67,12 +67,15 @@ function Field() {
           }
         }
       }
-      console.log(posts, "posts");
       for (let i in posts.metadata) {
-        const res = await axios.get(
-          `${sps[0].endpoint}/${id}/${posts.metadata[i].ObjectName}`
-        );
-        posts.metadata[i] = res.data;
+        try {
+          const res = await axios.get(
+            `${sps[0].endpoint}/${id}/${posts.metadata[i].ObjectName}`
+          );
+          posts.metadata[i] = res.data;
+        } catch (error) {
+          posts.metadata[i] = {};
+        }
       }
       console.log(posts, "posts");
       setPosts(posts);
@@ -80,7 +83,7 @@ function Field() {
       console.log(error);
     }
   };
-  console.log(posts, "alskdjklasjdlkasjd");
+  console.log(userPosts, "userPosts");
   useEffect(() => {
     fetchFieldDetails();
     fetchPosts();
@@ -174,16 +177,26 @@ function Field() {
             ))}
           </div>
           <div className="fieldContentsArea">
-            {posts &&
-              posts?.metadata?.map(
-                (item, index) => (
-                  <TextContent
-                    data={item}
-                    key={index}
-                    index={index}
-                    content={posts?.content[index]}
-                  />
-                )
+            {userPosts &&
+              userPosts?.metadata?.map(
+                (item, index) =>
+                  item?.type == "text" ? (
+                    <TextContent
+                      data={item}
+                      key={index}
+                      index={index}
+                      content={userPosts?.content[index]}
+                    />
+                  ) : (
+                    item?.type == "audio" && (
+                      <AudioContent
+                        data={item}
+                        key={index}
+                        index={index}
+                        content={userPosts?.content[index]}
+                      />
+                    )
+                  )
                 // ) : index % 3 === 1 ? (
                 //   <VideoContent data={data} key={index} index={index} />
                 // ) : (
