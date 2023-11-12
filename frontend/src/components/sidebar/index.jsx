@@ -61,8 +61,11 @@ function Sidebar() {
         let subscribedFields_ = [];
         for (let i = 0; i < res.length; i++) {
           let response = await api.get("user/" + res[i]);
-          console.log(response, "response");
-          subscribedFields_.push(response);
+          console.log(response, "response 222");
+          subscribedFields_.push({
+            name: res[i],
+            logo: response?.data?.data?.logo,
+           });
         }
         setSubscribedFields(subscribedFields_);
       }
@@ -118,7 +121,7 @@ function Sidebar() {
   fields && fields.length > 0 && 
 
           <div className="sidebarFieldsWrapper">
-            <div className="sidebarFieldsTitle">Newest Fields</div>
+            <div className="sidebarFieldsTitle">New Fields</div>
 
             <div className="sidebarFieldsItems">
               {

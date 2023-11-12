@@ -270,7 +270,7 @@ function CreateField() {
           ? "Image Uploading..."
           : loading.uploadLoading
           ? "Loading..."
-          : "Create Field"}
+          : "Setup Greenfield"}
       </button>
     </div>
   );
@@ -286,7 +286,7 @@ function CreateField() {
       <button
         onClick={() => handleStep2()}
       >
-        Contract
+        Register Group
       </button>
     </div>
   )

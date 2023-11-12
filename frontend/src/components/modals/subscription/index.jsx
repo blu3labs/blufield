@@ -90,12 +90,30 @@ function SubscriptionModal({ price, name }) {
 
   useEffect(() => {
     getIsSubscribed();
+
+    let interval = setInterval(() => {
+      getIsSubscribed();
+    }
+    , 10_000);
+
+    return () => {
+      clearInterval(interval);
+    };
+
   }, [address, name]);
 
   return (
     <>
-      <button className="fieldSubBtn" onClick={handleShow}>
-        Subscribe
+      <button className="fieldSubBtn" onClick={handleShow}
+        disabled={userIsSubscribed}
+
+        style={{
+          cursor: userIsSubscribed ? "not-allowed" : "pointer",
+        }}
+      >
+        {
+          userIsSubscribed ? "Subscribed" : "Subscribe"
+        }
       </button>
 
       <Modal
