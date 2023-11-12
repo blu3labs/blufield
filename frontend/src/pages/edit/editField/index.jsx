@@ -210,7 +210,7 @@ function EditField() {
           ? "Image Uploading..."
           : loading.uploadLoading
           ? "Loading..."
-          : "Create Field"}
+          : "Update Field"}
       </button>
     </div>
   );

@@ -51,6 +51,7 @@ function CreateField() {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(res, "photo")
       return res.url;
     } catch (error) {
       console.log(error);
@@ -89,6 +90,8 @@ function CreateField() {
           price: price,
           groupId: groupId,
         })
+
+
 
         localStorage.setItem("createItems",localItem_)
 
