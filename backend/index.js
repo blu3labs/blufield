@@ -16,6 +16,7 @@ app.use(
     extended: true,
   })
 );
+
 app.use(cors());
 //services
 const {
