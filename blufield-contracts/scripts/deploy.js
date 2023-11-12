@@ -51,9 +51,9 @@ async function main() {
     console.log("CreateField tx hash:", register.hash);
 
     const subscribe = await blufield.connect(account2).subscribeField(
-        755,
+        "bbb",
         {
-            value: parseEther("0.1"),
+            value: parseEther("0.02"),
         }
     );
     await subscribe.wait();

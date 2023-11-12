@@ -4,18 +4,24 @@ pragma solidity 0.8.20;
 
 import {IERC721NonTransferable} from "@bnb-chain/greenfield-contracts/contracts/interface/IERC721NonTransferable.sol";
 import {IERC1155NonTransferable} from "@bnb-chain/greenfield-contracts/contracts/interface/IERC1155NonTransferable.sol";
+import {IGnfdAccessControl} from "@bnb-chain/greenfield-contracts/contracts/interface/IGnfdAccessControl.sol";
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import {GroupApp, GroupStorage, IGroupHub, CmnStorage} from "@bnb-chain/greenfield-contracts-sdk/GroupApp.sol";
+import {EnumerableSetUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/structs/EnumerableSetUpgradeable.sol";
 
 contract Blufield is GroupApp, ReentrancyGuardUpgradeable {
+    using EnumerableSetUpgradeable for EnumerableSetUpgradeable.UintSet;
+
     IERC721NonTransferable public GROUP_TOKEN;
     IERC1155NonTransferable public MEMBER_TOKEN;
 
     mapping(address => uint256) public fieldIdOfUser;
-    mapping(uint256 => string) public fieldIdToName;
     mapping(string => uint256) public fieldNameToId;
+    mapping(uint256 => string) public fieldIdToName;
+    mapping(address => string) public userField;
     mapping(uint256 => uint256) public subscriptionFee;
     mapping(address => mapping(uint256 => uint64)) public expirationOfUserSubscription;
+    mapping(address => EnumerableSetUpgradeable.UintSet) private _userSubscriptions;
 
     function initialize(
         address _groupHub,
@@ -37,14 +43,18 @@ contract Blufield is GroupApp, ReentrancyGuardUpgradeable {
         require(price > 0, "Blufield: price is zero");
         fieldIdOfUser[msg.sender] = groupId;
         fieldIdToName[groupId] = name;
+        userField[msg.sender] = name;
         fieldNameToId[name] = groupId;
         subscriptionFee[groupId] = price;
     }
 
-    function subscribeField(uint256 groupId) external payable nonReentrant {
+    function subscribeField(string calldata fieldName) external payable nonReentrant {
+        uint256 groupId = fieldNameToId[fieldName];
+        require(groupId != 0, "Blufield: field not registered");
         require(bytes(fieldIdToName[groupId]).length > 0, "Blufield: field not registered");
         address owner = GROUP_TOKEN.ownerOf(groupId);
         require(owner != address(0), "Blufield: cannot subscribe to own field");
+        require(IGnfdAccessControl(groupHub).hasRole(GroupStorage.ROLE_UPDATE, owner, address(this)), "Blufield: role not granted");
         
         uint256 fee = subscriptionFee[groupId];
         uint256 totalFee = _getTotalFee();
@@ -71,6 +81,38 @@ contract Blufield is GroupApp, ReentrancyGuardUpgradeable {
 
         _updateGroupWithValue(owner, groupId, opType, members, expirations, msg.value - fee);
         payable(owner).transfer(fee);
+        expirationOfUserSubscription[msg.sender][groupId] = expiration;
+        _userSubscriptions[msg.sender].add(groupId);
+    }
+
+    function userSubscriptions(address user) external view returns (string[] memory) {
+        uint256 length = _userSubscriptions[user].length();
+        string[] memory subscriptions = new string[](length);
+        for (uint256 i = 0; i < length; i++) {
+            uint256 groupId = _userSubscriptions[user].at(i);
+            if(expirationOfUserSubscription[user][groupId] > block.timestamp) {
+                subscriptions[i] = fieldIdToName[groupId];
+            } else {
+                subscriptions[i] = "";
+            }
+        }
+        return subscriptions;
+    }
+
+    function isSubscribed(address user, string calldata name) external view returns (bool) {
+        uint256 groupId = fieldNameToId[name];
+        if (groupId == 0) {
+            return false;
+        }
+        return expirationOfUserSubscription[user][groupId] > block.timestamp;
+    }
+
+    function getFeeByName(string calldata name) external view returns (uint256) {
+        uint256 groupId = fieldNameToId[name];
+        if (groupId == 0) {
+            return 0;
+        }
+        return subscriptionFee[groupId];
     }
 
     function _updateGroupWithValue(
