@@ -27,8 +27,8 @@ export const writeContract = async (data) => {
 
     
     if (chainId !== undefined) {
-      if (chainId != signerChainId?.toString()) {
-        switchNetworkAsync(chainId);
+      if (chainId != signerChainId) {
+        await switchNetworkAsync(chainId);
         toast.error("Please switch to the correct network");
         toast.dismiss(loadToast);
         return "err";
@@ -39,12 +39,14 @@ export const writeContract = async (data) => {
 
     let val_ = val;
     if (!val_) {
+ 
       val_ = ethers.utils.parseUnits("0", 0);
     }
     let args_ = args;
     if (!args_) {
       args_ = [];
     }
+
 
     const tx = await contract[method](...args_, {
       value: val_,

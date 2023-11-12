@@ -49,6 +49,13 @@ function Home() {
       </div>
 
       <div className="homeSocials">
+      <a
+          href="https://blu3.dev/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Website
+        </a>
         <a
           href="https://twitter.com/blu3labs"
           target="_blank"
@@ -62,6 +69,13 @@ function Home() {
           rel="noopener noreferrer"
         >
           Email
+        </a>
+        <a
+          href="https://github.com/blu3labs/blufield"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Github
         </a>
       </div>
     </div>

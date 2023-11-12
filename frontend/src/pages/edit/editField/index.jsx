@@ -14,14 +14,14 @@ function EditField() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [accentColor, setAccentColor] = useState("#00A9FF");
-  const [banner, setBanner] = useState("null");
-  const [logo, setLogo] = useState("null");
-  const [name, setName] = useState("null");
-  const [email, setEmail] = useState("null");
-  const [twitter, setTwitter] = useState("null");
-  const [github, setGithub] = useState("null");
-  const [price, setPrice] = useState(2);
-  const [about, setAbout] = useState("null");
+  const [banner, setBanner] = useState(null);
+  const [logo, setLogo] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [twitter, setTwitter] = useState(null);
+  const [github, setGithub] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [about, setAbout] = useState(null);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--create-accent", accentColor);
@@ -54,7 +54,7 @@ function EditField() {
       setEmail(res.data.social_media.email);
       setTwitter(res.data.social_media.twitter);
       setGithub(res.data.social_media.github);
-      setPrice(res.data.subscription_price);
+      setPrice(res.data.price);
       setAbout(res.data.about);
     } catch (error) {
       console.log(error);
@@ -98,7 +98,7 @@ function EditField() {
         owner: address,
       });
       setLoading({ ...loading, uploadLoading: false });
-      navigate(`/${name}`);
+      // navigate(`/${name}`);
     } catch (error) {
       console.log(error);
       setLoading({ imageLoading: false, uploadLoading: false });

@@ -32,6 +32,15 @@ function CreateField() {
   useEffect(() => {
     document.documentElement.style.setProperty("--create-accent", accentColor);
   }, [accentColor]);
+
+
+  const [step,setStep] = useState(0);
+
+
+  const localItems = JSON.parse(localStorage.getItem("createItems"));
+
+  console.log(localItems, "localItems");
+
   const uploadPhoto = async (img) => {
     try {
       const formData = new FormData();
@@ -63,6 +72,7 @@ function CreateField() {
         setLoading({ uploadLoading: false, imageLoading: false });
         return;
       }
+    
       const groupId = await multiTxCreateBucket(
         name,
         address,
@@ -70,51 +80,96 @@ function CreateField() {
         switchNetworkAsync,
         chain?.id
       );
+          console.log("burdasın", signer)
 
+
+        let localItem_ = JSON.stringify({
+          name: name,
+          price: price,
+          groupId: groupId,
+        })
+
+        localStorage.setItem("createItems",localItem_)
+
+        const { data: res } = await api.post("user", {
+          name: name,
+          social_media: {
+            twitter: twitter,
+            github: github,
+            email: email,
+          },
+          price: price,
+          about: about,
+          logo: logoUrl,
+          banner: bannerUrl,
+          accentColor: accentColor,
+          bucketName: name,
+          owner: address,
+        });
+        console.log(res, "res");
+        setLoading({ ...loading, uploadLoading: false });
+    
+          window.location.reload();
       //web 3 area
-      const grantReturn = await writeContract({
-        signer: signer,
-        address: "0x50B3BF0d95a8dbA57B58C82dFDB5ff6747Cc1a9E",
-        abi: abi,
-        method: "grant",
-        args: [bluefieladdress[97], 4, "2000000000"],
-        chainId: "97",
-        switchNetworkAsync: switchNetworkAsync,
-      });
 
-      const contractReturn = await writeContract({
-        signer: signer,
-        address: bluefieladdress[97],
-        abi: bluefieldAbi,
-        method: "registerField",
-        args: [name, groupId, ethers.utils.parseEther(price?.toString())],
-        chainId: "97",
-        switchNetworkAsync: switchNetworkAsync,
-      });
-
-      const { data: res } = await api.post("user", {
-        name: name,
-        social_media: {
-          twitter: twitter,
-          github: github,
-          email: email,
-        },
-        price: price,
-        about: about,
-        logo: logoUrl,
-        banner: bannerUrl,
-        accentColor: accentColor,
-        bucketName: name,
-        owner: address,
-      });
-      console.log(res, "res");
-      setLoading({ ...loading, uploadLoading: false });
-      // navigate(`/${name}`);
+      
     } catch (error) {
       setLoading({ imageLoading: false, uploadLoading: false });
       console.log(error);
     }
   };
+
+
+
+  const handleStep2 = async () => {
+    try{
+
+      // step 2
+      await writeContract({
+        signer: signer,
+        address: "0x50B3BF0d95a8dbA57B58C82dFDB5ff6747Cc1a9E",
+        abi: abi,
+        method: "grant",
+        args: [bluefieladdress[97], 4, "2000000000"],
+        chainId: 97,
+        switchNetworkAsync: switchNetworkAsync,
+      });
+
+      console.log("burdasın 2 ")
+
+      await writeContract({
+        signer: signer,
+        address: bluefieladdress[97],
+        abi: bluefieldAbi,
+        method: "registerField",
+        args: [localItems?.name, localItems?.groupId, ethers.utils.parseEther(localItems?.price?.toString())],
+        chainId: 97,
+        switchNetworkAsync: switchNetworkAsync,
+      });
+
+      console.log("burdasın 3 ")
+
+      let name = localItems?.name;
+
+      localStorage.removeItem("createItems");
+      navigate(`/${name}`);
+
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
+  useEffect(() => {
+    if(localItems?.groupId){
+      setStep(1)
+    }
+  }, [localItems])
+
+
+  if(step == 0){
+
+  
 
   return (
     <div className="createField">
@@ -209,18 +264,33 @@ function CreateField() {
           opacity: loading.imageLoading || loading.uploadLoading ? "0.5" : "",
         }}
         disabled={loading.imageLoading || loading.uploadLoading}
-        onClick={async () => {
-          handleSaveUser();
-        }}
+        onClick={() => handleSaveUser()}
       >
         {loading.imageLoading
           ? "Image Uploading..."
           : loading.uploadLoading
           ? "Loading..."
-          : "Create Field"}
+          : "Setup Greenfield"}
       </button>
     </div>
   );
+}else if(step == 1){
+
+  return (
+    <div>
+      group id: {localItems?.groupId}
+      name:  {localItems?.name}
+      price: {localItems?.price}
+
+
+      <button
+        onClick={() => handleStep2()}
+      >
+        Register Group
+      </button>
+    </div>
+  )
+}
 }
 
 export default CreateField;
