@@ -40,6 +40,16 @@ function Sidebar() {
 
   useEffect(() => {
     fetchNewsetFields();
+
+    let interval = setInterval(() => {
+      fetchNewsetFields();
+    }
+    , 10_000);
+
+    return () => {
+      clearInterval(interval);
+    }
+    
   }, []);
 
   const [subscribedFields, setSubscribedFields] = useState([]);
