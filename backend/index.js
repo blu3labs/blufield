@@ -30,9 +30,9 @@ const {
 
 async function checkBucket() {
   try {
-
+    if (!process.env.BUCKET_NAME) {
       await createBucket(client);
-    
+    }
   } catch (error) {
     console.log(error);
   }

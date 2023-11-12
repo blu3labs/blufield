@@ -85,7 +85,7 @@ async function pushImage(file, client) {
     const allSps = await getAllSps(client);
     // fs.unlinkSync(file.path);
     return {
-      url: allSps[0].endpoint + "/view/profiles/" + name,
+      url: allSps[0].endpoint + "/view/blufield/" + name,
     };
   } catch (error) {
     console.log(error);
@@ -170,7 +170,7 @@ async function getAllUser(client) {
     for (let i of objects) {
       try {
         const { data: response } = await axios.get(
-          sps[0].endpoint + "/view/profiles/" + i.ObjectInfo.ObjectName
+          sps[0].endpoint + "/view/blufield/" + i.ObjectInfo.ObjectName
         );
         users.push(response);
       } catch (error) {
@@ -194,7 +194,7 @@ async function getUser(name, client) {
   try {
     const sps = await getAllSps(client);
     const { data: response } = await axios.get(
-      sps[0].endpoint + "/view/profiles/" + name + ".json"
+      sps[0].endpoint + "/view/blufield/" + name + ".json"
     );
     return {
       data: response,
