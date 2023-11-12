@@ -1,61 +1,106 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Link } from "react-router-dom";
 import { Dropdown } from "antd";
-import { BsLayoutTextWindowReverse} from "react-icons/bs";
+import { BsLayoutTextWindowReverse } from "react-icons/bs";
 import { AiOutlineAudio } from "react-icons/ai";
 import { BiVideo } from "react-icons/bi";
 import UserLogo from "@/assets/user.png";
+import { bluefieladdress, bluefieldAbi } from "@/contract/bluefield";
+import { readContract } from "@/utils/readContract";
+
+import { getAddress } from "@/utils/getAddress";
 import "./index.css";
+import { api } from "../../utils/api";
 
 function WalletButton() {
-  let userPage = {
+  let userPage_ = {
     visible: true,
-  
-    
-      name: "Danfo",
-      logo: "https://www.boredpanda.com/blog/wp-content/uploads/2021/08/funny-frogs-3-61239cc65b109__700.jpg",
-    
+    name: "Danfo",
+    logo: "https://www.boredpanda.com/blog/wp-content/uploads/2021/08/funny-frogs-3-61239cc65b109__700.jpg",
   };
+
+  const address = getAddress();
+
+  const [userPage, setUserPage] = useState({
+    visible: false,
+    name: "",
+    logo: "",
+  });
+
+  const fetchUserPage = async () => {
+    try {
+      let context = {
+        chain: 97,
+        address: bluefieladdress[97],
+        abi: bluefieldAbi,
+        method: "userField",
+        args: [address],
+      };
+
+      let res = await readContract(context);
+      console.log(res, "res 1");
+      if (res.length > 0) {
+        let res2 = await api.get("user/" + res);
+
+        console.log(res2, "res 2");
+
+        setUserPage({
+          visible: true,
+          name: res,
+          logo: res2.data?.data?.logo,
+        });
+      } else {
+        setUserPage({
+          visible: false,
+          name: "",
+          logo: "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setUserPage({
+        visible: false,
+        name: "",
+        logo: "",
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchUserPage();
+  }, []);
 
   const items = [
     {
       key: "1",
       label: (
         <div className="dropdownItems">
+          <Link
+            to={"/create/text/" + userPage.name}
+            className="myFieldButton dropItem"
+          >
+            <BsLayoutTextWindowReverse className="dropdownIcon" />
+            Text
+          </Link>
+          <Link
+            to={"/create/audio/" + userPage.name}
+            className="myFieldButton dropItem"
+          >
+            <AiOutlineAudio className="dropdownIcon" />
+            Audio
+          </Link>
 
-        <Link to="/create/text" className="myFieldButton dropItem">
-          <BsLayoutTextWindowReverse className="dropdownIcon" />
-          Text
-        </Link>
-           <Link to="/create/audio" className="myFieldButton dropItem">
-          <AiOutlineAudio className="dropdownIcon" />
-         Audio
-       </Link>
-
-       <Link to="/create/video" className="myFieldButton dropItem">
-          <BiVideo className="dropdownIcon" />
-         Video
-       </Link>
+          <Link
+            to={"/create/video/" + userPage.name}
+            className="myFieldButton dropItem"
+          >
+            <BiVideo className="dropdownIcon" />
+            Video
+          </Link>
         </div>
       ),
     },
-    // {
-    //   key: "2",
-    //   label: (
-    //     <Link to="/create/audio" className="myFieldButton">
-    //       Create Audio
-    //     </Link>
-    //   ),
-    // },
-    // {
-    //   key: "3",
-    //   label: (
-    //     <Link to="/create/video" className="myFieldButton">
-    //       Create Video
-    //     </Link>
-    //   ),
-    // },
   ];
 
   return (
@@ -106,10 +151,8 @@ function WalletButton() {
                         items,
                       }}
                       placement="top"
-
                       onOpenChange={(e) => console.log(e)}
                       // open
-                      
                     >
                       <button className="myFieldButton">Create Post</button>
                     </Dropdown>

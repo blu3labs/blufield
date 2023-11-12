@@ -21,12 +21,6 @@ function Field() {
   const { address } = useAccount();
   const [accentColor, setAccentColor] = useState("#00A9FF");
 
-  const [data, setData] = useState({
-    banner: false,
-    logo: false,
-
-    owner: false,
-  });
 
   useEffect(() => {
     document.documentElement.style.setProperty("--field-accent", accentColor);
@@ -35,7 +29,7 @@ function Field() {
   let tabMenuItems = ["All Posts", "Texts", "Audios", "Videos"];
 
   const [activeTab, setActiveTab] = useState("All Posts");
-  const [fieldDetails, setFieldDetails] = useState();
+  const [fieldDetails, setFieldDetails] = useState(null);
   const fetchFieldDetails = async () => {
     try {
       const { data: res } = await api.get(`user/${id}`);
@@ -43,6 +37,7 @@ function Field() {
       setAccentColor(res.data.accentColor);
     } catch (error) {
       console.log(error);
+      setFieldDetails(false);
     }
   };
   const [userPosts, setPosts] = useState();
@@ -89,6 +84,32 @@ function Field() {
     fetchPosts();
   }, [id]);
 
+  if (fieldDetails == null) {
+    return (
+      <div className="fiedlWrapper">
+        <span
+          style={{
+            marginTop: "20px",
+          }}
+        >
+          Loading...
+        </span>
+      </div>
+    );
+  } else if (fieldDetails == false) {
+    return (
+      <div className="fiedlWrapper">
+        <span
+          style={{
+            marginTop: "20px",
+          }}
+        >
+          Field not found
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="fiedlWrapper">
       <div className="fieldBanner">
@@ -112,11 +133,14 @@ function Field() {
           )}
         </div>
         {fieldDetails && fieldDetails?.owner == address ? (
-          <Link to="/edit/field" className="editBtn">
+          <Link to={"/edit/field/" + fieldDetails?.name} className="editBtn">
             Edit
           </Link>
         ) : (
-          <SubscriptionModal price={fieldDetails?.price} />
+          <SubscriptionModal
+            price={fieldDetails?.price}
+            name={fieldDetails?.name}
+          />
         )}
       </div>
 
@@ -125,7 +149,7 @@ function Field() {
           <div className="fieldUserTitle">
             <span>{fieldDetails?.name}</span>
           </div>
-          <div className="fieldUserShortInfo">15 Subs, 20 Posts</div>
+          {/* <div className="fieldUserShortInfo">15 Subs, 20 Posts</div> */}
 
           <div className="fieldUserAboutBox">
             <div className="fieldAboutTitle">About</div>
