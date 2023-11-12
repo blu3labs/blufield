@@ -26,27 +26,39 @@ function CreateText() {
   const { address, connector } = useAccount();
   const {} = useParams();
 
+
+
+  const [loading, setLoading] = useState(false);
+
   const createText = async () => {
-    const bannerUrl = await uploadPhoto(banner);
-    console.log(visibility);
-    const d = await CreateData(
-      "asdasdasd",
-      address,
-      await connector.getProvider(),
-      chain.id,
-      switchNetworkAsync,
-      {
-        bannerUrl,
-        title,
-        short_text: shortText,
-        text,
-        visibility:
+    setLoading(true);
+
+    try{
+
+      const bannerUrl = await uploadPhoto(banner);
+      console.log(visibility);
+      const d = await CreateData(
+        id,
+        address,
+        await connector.getProvider(),
+        chain.id,
+        switchNetworkAsync,
+        {
+          bannerUrl,
+          title,
+          short_text: shortText,
+          text,
+          visibility:
           visibility === "Public"
-            ? "VISIBILITY_TYPE_PUBLIC_READ"
-            : "VISIBILITY_TYPE_PRIVATE",
-      },
-      "text"
-    );
+          ? "VISIBILITY_TYPE_PUBLIC_READ"
+          : "VISIBILITY_TYPE_PRIVATE",
+        },
+        "text"
+        );
+      }catch(e){
+        console.log(e);
+      }
+      setLoading(false);
   };
 
   const uploadPhoto = async (img) => {
@@ -116,11 +128,17 @@ function CreateText() {
 
       <button
         className="createPostButton"
-        onClick={(e) => {
-          createText();
+        onClick={(e) => 
+          createText()
+        }
+
+        disabled={loading}
+        style={{
+          cursor: loading ? "not-allowed" : "pointer",
+          opacity: loading ? 0.5 : 1,
         }}
       >
-        Create Text
+        Create Text{loading && "..."}
       </button>
     </div>
   );
