@@ -6,7 +6,7 @@ const {hexlify, toUtf8Bytes} = require("ethers")
 require('dotenv').config()
 
 async function main() {
-    const [deployer, account2] = await ethers.getSigners();
+    const [deployer] = await ethers.getSigners();
     const deployerAddress = await deployer.getAddress();
     console.log("Deploying contracts with the account:", deployerAddress);
 
@@ -28,36 +28,6 @@ async function main() {
     await blufield.waitForDeployment();
     const blufieldAddress = await blufield.getAddress();
     console.log("Blufield deployed to:", blufieldAddress);
-
-    const abi = [
-        "function grant(address ,uint32 ,uint256 )",
-    ];
-    const hub = new ethers.Contract(
-      GROUP_HUB_ADDRESS,
-      abi,
-      deployer
-    );
-    const timestamp = 2000000000;
-    const grantRole = await hub.grant(blufieldAddress, 4, timestamp);
-    await grantRole.wait();
-    console.log("GrantRole tx hash:", grantRole.hash);
-    
-    const register = await blufield.registerField(
-        "bbb",
-        755,
-        parseEther("0.01"),
-    );
-    await register.wait();
-    console.log("CreateField tx hash:", register.hash);
-
-    const subscribe = await blufield.connect(account2).subscribeField(
-        755,
-        {
-            value: parseEther("0.1"),
-        }
-    );
-    await subscribe.wait();
-    console.log("SubscribeField tx hash:", subscribe.hash);
 }
 
 main()
