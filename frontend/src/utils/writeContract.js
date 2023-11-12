@@ -24,8 +24,10 @@ export const writeContract = async (data) => {
     }
     let signerChainId = signer?.provider?._network?.chainId;
 
+
+    
     if (chainId !== undefined) {
-      if (chainId !== signerChainId) {
+      if (chainId != signerChainId?.toString()) {
         switchNetworkAsync(chainId);
         toast.error("Please switch to the correct network");
         toast.dismiss(loadToast);

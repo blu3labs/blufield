@@ -9,17 +9,20 @@ function Home() {
     {
       image: Text,
       title: "Text",
-      desc: "Express Your Thoughts: Share your ideas or stories in written form.",
+      desc: "Express Your Thoughts",
+      desc1: " Use words to articulate your thoughts and narrate your stories.",
     },
     {
       image: Audio,
       title: "Audio",
-      desc: `Voice Your Expression: Share your emotions, memories, or thoughts in an audio format.`,
+      desc: "Voice Your Expression",
+      desc1: `Share your emotions, memories, or thoughts in an audio format.`,
     },
     {
       image: Video,
       title: "Video",
-      desc: "Visual Storytelling: Share your stories and experiences through video content.",
+      desc: "Visual Storytelling",
+      desc1: "Share your stories and experiences through video content.",
     },
   ];
   return (
@@ -27,15 +30,20 @@ function Home() {
       <div className="homeHeader">Blufield</div>
       {/* <div className="homeTitle">Lorem, ipsum dolor.</div> */}
       <div className="homeSubtitle">
-        Lorem ipsum dolor sit amet consectetur adipisicing.
-      </div>
+      A dynamic platform for personalized text, audio, and video sharing, connecting through diverse expressions.
+            </div>
 
       <div className="homeItems">
         {items.map((item, index) => (
           <div className="homeItem" key={index}>
             <div className="homeItemTitle">{item.title}</div>
             <img src={item.image} alt="" draggable={false} />
-            <div className="homeItemDesc">{item.desc}</div>
+            <div className="homeItemDesc">
+
+              {item.desc}
+              <br/>
+              {item.desc1}
+            </div>
           </div>
         ))}
       </div>

@@ -24,13 +24,13 @@ function CreateText() {
   const signer = useSigner();
   const navigate = useNavigate();
   const { address, connector } = useAccount();
-  const {} = useParams()
+  const {} = useParams();
 
   const createText = async () => {
     const bannerUrl = await uploadPhoto(banner);
-    console.log(visibility)
+    console.log(visibility);
     const d = await CreateData(
-      "testfrombackaf",
+      "asdasdasd",
       address,
       await connector.getProvider(),
       chain.id,
@@ -38,20 +38,22 @@ function CreateText() {
       {
         bannerUrl,
         title,
-        shortText,
+        short_text: shortText,
         text,
-        visibility: visibility === "Public" ? "VISIBILITY_TYPE_PUBLIC_READ" : "VISIBILITY_TYPE_PRIVATE",
+        visibility:
+          visibility === "Public"
+            ? "VISIBILITY_TYPE_PUBLIC_READ"
+            : "VISIBILITY_TYPE_PRIVATE",
       },
       "text"
     );
   };
 
- 
   const uploadPhoto = async (img) => {
     try {
       const formData = new FormData();
       formData.append("file", img);
-      console.log("imggg")
+      console.log("imggg");
       const { data: res } = await api.post("img", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

@@ -4,10 +4,22 @@ import { getAddress } from "@/utils/getAddress";
 import { getNativeBalance } from "@/utils/getNativeBalance";
 import { useAccount } from "wagmi";
 import BigNumer from "bignumber.js";
+import { useSigner } from "@/utils/useSigner";
+import { useSwitchNetwork } from "wagmi";
+import { writeContract } from "@/utils/writeContract";
+import { toast } from "react-hot-toast";
+import { ethers } from "ethers";
+import { useNetwork } from "wagmi";
+
 import "./index.css";
 
-function DonateModal() {
+function DonateModal({owner}) {
   const { isConnected } = useAccount();
+
+  const signer = useSigner();
+  const { chain } = useNetwork();
+
+  const { switchNetworkAsync } = useSwitchNetwork();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -51,6 +63,59 @@ function DonateModal() {
     };
   }, [address]);
 
+  const [amount, setAmount] = useState(null);
+
+
+
+  const [loading, setLoading] = useState(false);
+  const handleDonate = async () => {
+    if (!signer) {
+      toast.error("Please connect wallet");
+      return;
+    }
+
+    if (
+      amount === null ||
+      amount === undefined ||
+      amount === "" ||
+      parseFloat(amount) <= 0
+    ) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const tx = await signer?.sendTransaction({
+        to: owner,
+        value: ethers.utils.parseUnits(amount, "ether"),
+      });
+
+      await tx.wait();
+
+      console.log(tx);
+
+      toast.success("Donation successful");
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error
+          ? error.reason !== undefined
+            ? error.reason?.includes("execution reverted")
+              ? error.reason?.split("execution reverted:")[1]
+              : error.reason
+            : error.message !== undefined
+            ? error.message === "Internal JSON-RPC error."
+              ? "Insufficient Balance"
+              : error.message
+            : "Something went wrong"
+          : "Something went wrong"
+      );
+    }
+    setLoading(false);
+  };
+
+
   return (
     <>
       <button className="fieldDonateBtn" onClick={handleShow}>
@@ -64,7 +129,6 @@ function DonateModal() {
         footer={null}
         centered
         className="subDonateModal"
-
       >
         <div className="fieldDetailModal">
           <div className="fieldDetailTitle">Donate</div>
@@ -95,12 +159,24 @@ function DonateModal() {
                     event.preventDefault();
                   }
                 }}
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
               />
               <span>BNB</span>
             </div>
           </div>
 
-          <button className="subBtn">Submit</button>
+          <button
+            className="subBtn"
+            onClick={() => handleDonate()}
+            disabled={loading}
+            style={{
+              cursor: loading ? "not-allowed" : "pointer",
+              opacity: loading ? 0.7 : 1,
+            }}
+          >
+            {loading ? "Loading..." : "Submit"}
+          </button>
         </div>
       </Modal>
     </>

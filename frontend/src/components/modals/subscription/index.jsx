@@ -31,8 +31,7 @@ function SubscriptionModal({ price }) {
           <div className="fieldDetailTitle">Subscribe</div>
 
           <div className="subsDesc">
-            All the content you create will be available to your subscribers.
-            You can set the price of your subscription. You can also
+              Subscribe to this field to get access to all the content.
           </div>
 
           <button className="subBtn">

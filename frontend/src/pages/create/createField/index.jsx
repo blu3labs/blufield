@@ -77,15 +77,19 @@ function CreateField() {
         address: "0x50B3BF0d95a8dbA57B58C82dFDB5ff6747Cc1a9E",
         abi: abi,
         method: "grant",
-        args: [bluefieladdress[chain?.id], 4, "2000000000"],
+        args: [bluefieladdress[97], 4, "2000000000"],
+        chainId: "97",
+        switchNetworkAsync: switchNetworkAsync,
       });
 
       const contractReturn = await writeContract({
         signer: signer,
-        address: bluefieladdress[chain?.id],
+        address: bluefieladdress[97],
         abi: bluefieldAbi,
         method: "registerField",
         args: [name, groupId, ethers.utils.parseEther(price?.toString())],
+        chainId: "97",
+        switchNetworkAsync: switchNetworkAsync,
       });
 
       const { data: res } = await api.post("user", {
@@ -105,7 +109,7 @@ function CreateField() {
       });
       console.log(res, "res");
       setLoading({ ...loading, uploadLoading: false });
-      navigate(`/${name}`);
+      // navigate(`/${name}`);
     } catch (error) {
       setLoading({ imageLoading: false, uploadLoading: false });
       console.log(error);

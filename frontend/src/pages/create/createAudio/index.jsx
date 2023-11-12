@@ -46,7 +46,7 @@ function CreateAudio() {
   const createAudio = async () => {
     const bannerUrl = await uploadPhoto(banner);
     const d = await CreateData(
-      "testfrombackaf",
+      "asdasdasd",
       address,
       await connector.getProvider(),
       chain.id,

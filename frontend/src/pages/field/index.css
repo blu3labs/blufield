@@ -212,6 +212,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  margin-bottom: 16px;
+
 }
 
 .editBtn:hover {

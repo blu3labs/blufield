@@ -39,6 +39,7 @@
   color: var(--text);
   font-size: 18px;
   font-weight: 500;
+  max-width: 570px;
 }
 
 .homeItems {

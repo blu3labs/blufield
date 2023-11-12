@@ -7,47 +7,19 @@ import { api } from "../../utils/api";
 function Sidebar() {
   let newestFields = [
     {
-      name: "Field 1",
-      logo: "https://picsum.photos/200",
+      name: "SpaceNight",
+      logo: "https://media.istockphoto.com/id/627281636/tr/foto%C4%9Fraf/earth-night-space.jpg?s=612x612&w=0&k=20&c=5qtSGG06t97vnUPVF74PM2sGGMXlPrh31GZqO2xPEBI=",
     },
     {
-      name: "Field 2",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
-      logo: "https://picsum.photos/200",
+      name: "Danfo",
+      logo: "https://www.boredpanda.com/blog/wp-content/uploads/2021/08/funny-frogs-3-61239cc65b109__700.jpg",
     },
   ];
 
   let subscribedFields = [
     {
-      name: "Field 1",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 2",
-      logo: "https://picsum.photos/200",
-    },
-    {
-      name: "Field 3",
-      logo: "https://picsum.photos/200",
+      name: "Moziah",
+      logo: "https://avatars.githubusercontent.com/u/87377842?v=4",
     },
   ];
   const [fields, setFields] = useState([]);
@@ -94,8 +66,8 @@ function Sidebar() {
             <div className="sidebarFieldsTitle">Newest Fields</div>
 
             <div className="sidebarFieldsItems">
-              {fields &&
-                fields?.map((item, index) => (
+              {true &&
+                newestFields?.map((item, index) => (
                   <Link
                     to={"/" + item.name}
                     className="sidebarFieldItem"

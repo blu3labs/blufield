@@ -13,6 +13,9 @@ import "./index.css";
 import { api } from "../../utils/api";
 import { useAccount } from "wagmi";
 import { getAddress } from "../../utils/getAddress";
+import { client } from "../../utils/client";
+import { getAllSps } from "../../utils/getAllSps";
+import axios from "axios";
 function Field() {
   const { id } = useParams();
   const { address } = useAccount();
@@ -42,9 +45,45 @@ function Field() {
       console.log(error);
     }
   };
-
+  const [posts, setPosts] = useState();
+  const fetchPosts = async () => {
+    try {
+      const sps = await getAllSps(client);
+      const res = await client.object.listObjects({
+        bucketName: id,
+        endpoint: sps[0].endpoint,
+      });
+      let posts = {
+        metadata: [],
+        content: [],
+      };
+      let data = [...res.body.GfSpListObjectsByBucketNameResponse.Objects];
+      for (let i of data) {
+        if (i.ObjectInfo.ContentType == "json") {
+          if (i.ObjectInfo.ObjectName.includes("metadata")) {
+            posts.metadata.push(i.ObjectInfo);
+          } else {
+            posts.content.push(i.ObjectInfo);
+          }
+        }
+      }
+      console.log(posts, "posts");
+      for (let i in posts.metadata) {
+        const res = await axios.get(
+          `${sps[0].endpoint}/${id}/${posts.metadata[i].ObjectName}`
+        );
+        posts.metadata[i] = res.data;
+      }
+      console.log(posts, "posts");
+      setPosts(posts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(posts, "alskdjklasjdlkasjd");
   useEffect(() => {
     fetchFieldDetails();
+    fetchPosts();
   }, [id]);
 
   return (
@@ -118,7 +157,7 @@ function Field() {
               )}
             </div>
           </div>
-          <DonateModal />
+          <DonateModal owner={fieldDetails?.owner} />
         </div>
         <div className="fieldRightArea">
           <div className="fieldRightTabMenus">
@@ -135,16 +174,21 @@ function Field() {
             ))}
           </div>
           <div className="fieldContentsArea">
-            {Array(12)
-              .fill()
-              .map((item, index) =>
-                index % 3 === 0 ? (
-                  <TextContent data={data} key={index} index={index}/>
-                ) : index % 3 === 1 ? (
-                  <VideoContent data={data} key={index} index={index}/>
-                ) : (
-                  <AudioContent data={data} key={index} index={index}/>
+            {posts &&
+              posts?.metadata?.map(
+                (item, index) => (
+                  <TextContent
+                    data={item}
+                    key={index}
+                    index={index}
+                    content={posts?.content[index]}
+                  />
                 )
+                // ) : index % 3 === 1 ? (
+                //   <VideoContent data={data} key={index} index={index} />
+                // ) : (
+                //   <AudioContent data={data} key={index} index={index} />
+                // )
               )}
           </div>
         </div>

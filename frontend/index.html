@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" , type="image/x-icon" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,15 +12,15 @@
       rel="stylesheet"
     />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap"
-      rel="stylesheet"
-    />
-
     <title>Blufield</title>
   </head>
   <body>
     <div id="root"></div>
+    <script src="https://unpkg.com/@bnb-chain/greenfiled-file-handle@0.2.1/dist/browser/umd/index.js"></script>
+    <script>
+      window.__PUBLIC_FILE_HANDLE_WASM_PATH__ =
+        "https://unpkg.com/@bnb-chain/greenfiled-file-handle@0.2.1/dist/node/file-handle.wasm";
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

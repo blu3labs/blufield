@@ -11,8 +11,11 @@ import "./index.css";
 function WalletButton() {
   let userPage = {
     visible: true,
-    name: "test field 1",
-    logo: "https://picsum.photos/200",
+  
+    
+      name: "Danfo",
+      logo: "https://www.boredpanda.com/blog/wp-content/uploads/2021/08/funny-frogs-3-61239cc65b109__700.jpg",
+    
   };
 
   const items = [

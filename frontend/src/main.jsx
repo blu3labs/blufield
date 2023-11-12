@@ -6,7 +6,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { Buffer } from "buffer";
-import { bsc, bscTestnet } from "wagmi/chains";
+import { bsc, bscTestnet} from "wagmi/chains";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import "./index.css";
@@ -18,9 +18,9 @@ window.Buffer = Buffer;
 
 
 bscTestnet.name = "BSC Testnet";
-
+console.log(Greenfield.GREEN_CHAIN_NAME, "GREEN_CHAIN_NAME", Greenfield.GREEN_CHAIN_ID);
 const greenfiels = {
-  id: Greenfield.GREEN_CHAIN_ID,
+  id: 5600,
   name: "Greenfield",
   network: "Greenfield",
   iconUrl: bscTestnet.iconUrl,

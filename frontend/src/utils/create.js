@@ -48,7 +48,7 @@ export const CreateData = async (
   };
 
   if (type === "text") {
-    data = {
+    let newdata = {
       title: data.title,
       shortText: data.shortText,
       bannerUrl: data.bannerUrl,
@@ -76,29 +76,53 @@ export const CreateData = async (
 
     const metadataForUs = {
       userAddress: address,
-      banner: data.bannerURL,
+      banner: data.bannerUrl,
       title: data.title,
       short_text: data.short_text,
+      type: "text",
+      created_date: new Date().getTime(),
     };
+    console.log("metadata degil contenttttt ", metadataForUs);
 
     // create metadata.
 
-    const metadataResponse = await api.post("/checksums", metadataForUs, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const contentResponse = await api.post("/checksums", data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    let bufferContent = Buffer.from(JSON.stringify(newdata).toString("utf8"));
+
+
+    // const formData = new FormData();
+    // formData.append("file",  new Blob([buffer], {
+    //   type:"audio/wav",
+    // }));
+
+    const hashResultContent = await window.FileHandle.getCheckSums(
+      new Uint8Array(bufferContent)
+    );
+    const {
+      contentLength: contentLengthContent,
+      expectCheckSums: expectContent,
+    } = hashResultContent;
+
+    let bufferMetadata = Buffer.from(
+      JSON.stringify(metadataForUs).toString("utf8")
+    );
+
+
+    // const formData = new FormData();
+    // formData.append("file",  new Blob([buffer], {
+    //   type:"audio/wav",
+    // }));
+
+    const hashResultMetaData = await window.FileHandle.getCheckSums(
+      new Uint8Array(bufferMetadata)
+    );
+    const { contentLength: contentMetaData, expectCheckSums: expectMetaData } =
+      hashResultMetaData;
     const metadataObject = await client.object.createObject(
       {
         bucketName: bucketName,
-        contentLength: metadataResponse.data.contentLength,
+        contentLength: contentMetaData,
         creator: address,
-        expectCheckSums: JSON.parse(metadataResponse.data.expectCheckSums),
+        expectCheckSums: JSON.parse(expectMetaData),
         fileType: "json",
         objectName: folderName + "/metadata.json",
         redundancyType: "REDUNDANCY_EC_TYPE",
@@ -107,12 +131,13 @@ export const CreateData = async (
       signingData
     );
 
+    console.log("metadata degil contenttttt visibiliyy ", data);
     const userTx = await client.object.createObject(
       {
         bucketName: bucketName,
-        contentLength: contentResponse.data.contentLength,
+        contentLength: contentLengthContent,
         creator: address,
-        expectCheckSums: JSON.parse(contentResponse.data.expectCheckSums),
+        expectCheckSums: JSON.parse(expectContent),
         fileType: "json",
         objectName: folderName + "/content.json",
         redundancyType: "REDUNDANCY_EC_TYPE",
@@ -134,7 +159,7 @@ export const CreateData = async (
     //     })
 
     console.log("txxxx ", txMultiCreate);
-    const filedata = Buffer.from(JSON.stringify(data).toString("utf8"));
+    const filedata = Buffer.from(JSON.stringify(newdata).toString("utf8"));
     const metadatafile = Buffer.from(
       JSON.stringify(metadataForUs).toString("utf8")
     );
@@ -205,11 +230,187 @@ export const CreateData = async (
     console.log(data);
     const metadataForUs = {
       userAddress: address,
+      banner: data.bannerUrl,
+      title: data.title,
+      short_text: data.shortText,
+      type: "audio",
+      created_date: new Date().getTime(),
+    };
+
+    // create metadata.
+
+    const folderName = generateString(10);
+    const folder = await client.object.createFolder(
+      {
+        bucketName: bucketName,
+        creator: address,
+
+        objectName: folderName + "/",
+        visibility: "VISIBILITY_TYPE_PRIVATE",
+      },
+      signingData
+    );
+
+    let bufferMetadata = Buffer.from(
+      JSON.stringify(metadataForUs).toString("utf8")
+    );
+
+
+    // const formData = new FormData();
+    // formData.append("file",  new Blob([buffer], {
+    //   type:"audio/wav",
+    // }));
+
+    const hashResultMetaData = await window.FileHandle.getCheckSums(
+      new Uint8Array(bufferMetadata)
+    );
+    const { contentLength: contentMetaData, expectCheckSums: expectMetaData } =
+      hashResultMetaData;
+    // bannerURL => uPLOADED
+    const metadataObject = await client.object.createObject(
+      {
+        bucketName: bucketName,
+        contentLength: contentMetaData,
+        creator: address,
+        expectCheckSums: JSON.parse(expectMetaData),
+        fileType: "json",
+        objectName: folderName + "/metadata.json",
+        redundancyType: "REDUNDANCY_EC_TYPE",
+        visibility: "VISIBILITY_TYPE_PUBLIC_READ",
+      },
+      signingData
+    );
+    let bufferContent = Buffer.from(
+      JSON.stringify(metadataForUs).toString("utf8")
+    );
+
+
+    // const formData = new FormData();
+    // formData.append("file",  new Blob([buffer], {
+    //   type:"audio/wav",
+    // }));
+
+    const hashResultContent = await window.FileHandle.getCheckSums(
+      new Uint8Array(bufferContent)
+    );
+    const {
+      contentLength: contentLengthContent,
+      expectCheckSums: expectContent,
+    } = hashResultContent;
+    const userTx = await client.object.createObject(
+      {
+        bucketName: bucketName,
+        contentLength: contentLengthContent,
+        creator: address,
+        expectCheckSums: JSON.parse(expectContent),
+        fileType: "json",
+        objectName: folderName + "/content.json",
+        redundancyType: "REDUNDANCY_EC_TYPE",
+        visibility: data.visibility,
+      },
+      signingData
+    );
+
+    // upload audio
+    // formt data
+    let buffer = await data.audio.arrayBuffer();
+
+
+    // const formData = new FormData();
+    // formData.append("file",  new Blob([buffer], {
+    //   type:"audio/wav",
+    // }));
+
+    const hashResult = await window.FileHandle.getCheckSums(
+      new Uint8Array(buffer)
+    );
+    const { contentLength, expectCheckSums } = hashResult;
+    // const audioResponse = await api.post("/checksums/audio", formData, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
+    // console.log(audioResponse, " audio response");
+    const audioTx = await client.object.createObject(
+      {
+        bucketName: bucketName,
+        contentLength: contentLength,
+        creator: address,
+        expectCheckSums: JSON.parse(expectCheckSums),
+        fileType: "wav",
+        objectName: folderName + "/audio." + data.audio.type.split("/")[1],
+        redundancyType: "REDUNDANCY_EC_TYPE",
+        visibility: data.visibility,
+      },
+      signingData
+    );
+    console.log(audioTx, " audio tx");
+
+    const multitx = await client.txClient.multiTx([
+      folder,
+      metadataObject,
+      userTx,
+      audioTx,
+    ]);
+    const tx = await multitx.broadcast({
+      ...broadcasting,
+    });
+
+    const metadataUpload = await client.object.uploadObject(
+      {
+        bucketName: bucketName,
+        objectName: folderName + "/metadata.json",
+        body: bufferMetadata,
+        txnHash: tx.transactionHash,
+      },
+      signingData
+    );
+    const contentUpload = await client.object.uploadObject(
+      {
+        bucketName: bucketName,
+        objectName: folderName + "/content.json",
+        body: bufferContent,
+        txnHash: tx.transactionHash,
+      },
+      signingData
+    );
+    try {
+      const audioUpload = await client.object.uploadObject(
+        {
+          bucketName: bucketName,
+          objectName: folderName + "/audio." + data.audio.type.split("/")[1],
+          body: data.audio,
+          txnHash: tx.transactionHash,
+        },
+        signingData
+      );
+      console.log(audioUpload, " audio upload");
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(tx, " tx");
+
+    // upload audio$
+
+    // create metadata for us
+
+    //create object
+  } else if (type === "video") {
+    data = {
+      title: data.title,
+      shortText: data.shortText,
+      bannerUrl: data.bannerUrl,
+      text: data.text,
+      video: data.video,
+    };
+
+    console.log(data);
+    const metadataForUs = {
+      userAddress: address,
       banner: data.bannerURL,
       title: data.title,
       short_text: data.short_text,
     };
-
     // create metadata.
 
     const folderName = generateString(10);
@@ -263,78 +464,27 @@ export const CreateData = async (
       signingData
     );
 
-    // upload audio
-    // formt data
-    let buffer = await data.audio.arrayBuffer()
-
- 
-
     const formData = new FormData();
-    formData.append("file",  new Blob([buffer], {
-      type:"audio/wav",
-    }));
+    formData.append("file", data.video);
 
-    const audioResponse = await api.post("/checksums/audio", formData, {
+    const videoResponse = await api.post("/checksums/audio", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(audioResponse, " audio response");
-    const audioTx = await client.object.createObject(
+
+    const videoTx = await client.object.createObject(
       {
         bucketName: bucketName,
         contentLength: contentResponse.data.contentLength,
         creator: address,
         expectCheckSums: JSON.parse(contentResponse.data.expectCheckSums),
-        fileType: "wav",
-        objectName:
-          folderName +
-          "/audio." +
-          data.audio.type.split("/")[1],
+        fileType: "mp4",
+        objectName: folderName + "/video." + data.audio.type.split("/")[1],
         redundancyType: "REDUNDANCY_EC_TYPE",
         visibility: data.visibility,
       },
       signingData
     );
-    console.log(audioTx, " audio tx");
-
-    const multitx = await client.txClient.multiTx([
-      folder,
-      metadataObject,
-      userTx,
-      audioTx,
-    ]);
-    const tx = await multitx.broadcast({
-      ...broadcasting,
-    });
-  
-  
-
-    console.log("buff ", buffer)
-    try {
-      let newBuffered = Buffer.from(buffer.toString("utf8"))
-    const audioUpload = await client.object.uploadObject(
-      {
-        bucketName: bucketName,
-        objectName:
-          folderName +
-          "/audio." +
-          data.audio.type.split("/")[1],
-        body: newBuffered,
-        txnHash: tx.transactionHash,
-      },
-      signingData
-    );
-    console.log(audioUpload, " audio upload");
-    }catch(err){
-      console.log(err)
-    }
-    console.log(tx, " tx");
-
-    // upload audio$
-
-    // create metadata for us
-
-    //create object
   }
 };
