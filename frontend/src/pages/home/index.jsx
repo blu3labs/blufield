@@ -9,17 +9,17 @@ function Home() {
     {
       image: Text,
       title: "Text",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+      desc: "Express Your Thoughts: Share your ideas or stories in written form.",
     },
     {
       image: Audio,
       title: "Audio",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+      desc: `Voice Your Expression: Share your emotions, memories, or thoughts in an audio format.`,
     },
     {
       image: Video,
       title: "Video",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+      desc: "Visual Storytelling: Share your stories and experiences through video content.",
     },
   ];
   return (
