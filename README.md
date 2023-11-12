@@ -6,6 +6,8 @@ Live Demo Link: https://blu3labs-blufield-frontend.blu3.app/
 
 Project presentation https://bit.ly/blufield
 
+BSC Testnet Contract Address: 0x97509473ED9512b8F01ff983a88c003BCBF6916D
+
 To deploy smart contract run npm i, create dotenv file with a private key and then run  npx hardhat run scripts/deploy.js --network bsc||bscTestnet
 
 For Frontend: run; npm install, then; npm run dev. 
