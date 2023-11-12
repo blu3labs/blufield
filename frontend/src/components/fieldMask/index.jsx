@@ -3,12 +3,12 @@ import SubscriptionModal from "@/components/modals/subscription";
 import { AiOutlineLock } from "react-icons/ai";
 import "./index.css";
 
-function FieldMask() {
+function FieldMask({price , name}) {
   return (
     <div className="fieldMask">
       <AiOutlineLock className="clockIcon" />
       <span>Subscribe to see this content</span>
-      <SubscriptionModal />
+      <SubscriptionModal price={price} name={name} userIsSubscribed={false}/>
     </div>
   );
 }

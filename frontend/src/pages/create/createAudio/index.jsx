@@ -9,6 +9,7 @@ import { api } from "../../../utils/api";
 import { useAccount, useSwitchNetwork, useNetwork } from "wagmi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSigner } from "../../../utils/useSigner";
+import toast from "react-hot-toast";
 
 function CreateAudio() {
   const [banner, setBanner] = useState(null);
@@ -24,12 +25,12 @@ function CreateAudio() {
   const signer = useSigner();
   const navigate = useNavigate();
   const { address, connector } = useAccount();
-  const {} = useParams()
- const uploadPhoto = async (img) => {
+  const { id } = useParams();
+  const uploadPhoto = async (img) => {
     try {
       const formData = new FormData();
       formData.append("file", img);
-      console.log("imggg")
+      console.log("imggg");
       const { data: res } = await api.post("img", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -43,23 +44,37 @@ function CreateAudio() {
     }
   };
 
+  const [loading, setLoading] = useState(false);
   const createAudio = async () => {
-    const bannerUrl = await uploadPhoto(banner);
-    const d = await CreateData(
-      "asdasdasd",
-      address,
-      await connector.getProvider(),
-      chain.id,
-      switchNetworkAsync,
-      {
-        bannerUrl,
-        title,
-        shortText,
-        audio,
-        visibility: visibility === "Public" ? "VISIBILITY_TYPE_PUBLIC_READ" : "VISIBILITY_TYPE_PRIVATE",
-      },
-      "audio"
-    );
+    setLoading(true);
+
+    try {
+      const bannerUrl = await uploadPhoto(banner);
+      const d = await CreateData(
+        id,
+        address,
+        await connector.getProvider(),
+        chain.id,
+        switchNetworkAsync,
+        {
+          bannerUrl,
+          title,
+          shortText,
+          audio,
+          visibility:
+            visibility === "Public"
+              ? "VISIBILITY_TYPE_PUBLIC_READ"
+              : "VISIBILITY_TYPE_PRIVATE",
+        },
+        "audio"
+      );
+      if (d.includes("success")) {
+        toast.success("Audio added successfuly!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
   };
   return (
     <div className="createPost">
@@ -90,12 +105,12 @@ function CreateAudio() {
             onChange={(e) => setShortText(e.target.value)}
           />
           <UploadAudio
-          audio={audio}
-          setAudio={setAudio}
-          className="createPostAudio"
-          iconClassName="createPostAudioUploadIcon"
-          text="Upload Audio"
-        />
+            audio={audio}
+            setAudio={setAudio}
+            className="createPostAudio"
+            iconClassName="createPostAudioUploadIcon"
+            text="Upload Audio"
+          />
 
           <SelectBox
             title="Visibility"
@@ -111,9 +126,17 @@ function CreateAudio() {
         </div>
       </div>
 
-      <button className="createPostButton" onClick={(e) => {
-        createAudio()
-      }}>Create Audio</button>
+      <button
+        className="createPostButton"
+        onClick={(e) => createAudio()}
+        disabled={loading}
+        style={{
+          cursor: loading ? "not-allowed" : "pointer",
+          opacity: loading ? 0.5 : 1,
+        }}
+      >
+        Create Audio{loading && "..."}
+      </button>
     </div>
   );
 }

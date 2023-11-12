@@ -16,9 +16,14 @@ import { getAddress } from "../../utils/getAddress";
 import { client } from "../../utils/client";
 import { getAllSps } from "../../utils/getAllSps";
 import axios from "axios";
+import { bluefieladdress, bluefieldAbi } from "../../contract/bluefield";
+
+import { readContract } from "@/utils/readContract";
 function Field() {
   const { id } = useParams();
-  const { address } = useAccount();
+  const  address = getAddress();
+
+  
   const [accentColor, setAccentColor] = useState("#00A9FF");
 
 
@@ -84,6 +89,46 @@ function Field() {
     fetchPosts();
   }, [id]);
 
+
+
+  const [userIsSubscribed, setUserIsSubscribed] = useState(false);
+
+  const getIsSubscribed = async () => {
+    try {
+      let context = {
+        chain: 97,
+        address: bluefieladdress[97],
+        abi: bluefieldAbi,
+        method: "isSubscribed",
+        args: [address, fieldDetails?.name],
+      };
+
+      let res = await readContract(context);
+
+      console.log(res, "res 23",address,fieldDetails?.name,"fieldDetails?.name");
+
+      setUserIsSubscribed(res);
+    } catch (error) {
+      console.log(error);
+      setUserIsSubscribed(false);
+    }
+  };
+
+  useEffect(() => {
+    getIsSubscribed();
+
+    let interval = setInterval(() => {
+      getIsSubscribed();
+    }
+    , 10_000);
+
+    return () => {
+      clearInterval(interval);
+    };
+
+  }, [address, fieldDetails]);
+
+
   if (fieldDetails == null) {
     return (
       <div className="fiedlWrapper">
@@ -140,6 +185,8 @@ function Field() {
           <SubscriptionModal
             price={fieldDetails?.price}
             name={fieldDetails?.name}
+            userIsSubscribed={userIsSubscribed}
+
           />
         )}
       </div>
@@ -210,6 +257,9 @@ function Field() {
                       key={index}
                       index={index}
                       content={userPosts?.content[index]}
+                      price={fieldDetails?.price}
+                      name={fieldDetails?.name}
+                      userIsSubscribed={userIsSubscribed || fieldDetails?.owner == address}
                     />
                   ) : (
                     item?.type == "audio" && (
@@ -218,6 +268,9 @@ function Field() {
                         key={index}
                         index={index}
                         content={userPosts?.content[index]}
+                        price={fieldDetails?.price}
+                        name={fieldDetails?.name}
+                        userIsSubscribed={userIsSubscribed || fieldDetails?.owner == address}
                       />
                     )
                   )

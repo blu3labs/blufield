@@ -11,7 +11,7 @@ import { ethers } from "ethers";
 import { getAddress } from "@/utils/getAddress";
 import { readContract } from "../../../utils/readContract";
 
-function SubscriptionModal({ price, name }) {
+function SubscriptionModal({ price, name,userIsSubscribed }) {
   const { switchNetworkAsync } = useSwitchNetwork();
   const signer = useSigner();
   const address = getAddress();
@@ -65,42 +65,7 @@ function SubscriptionModal({ price, name }) {
     setLoading(false);
   };
 
-  const [userIsSubscribed, setUserIsSubscribed] = useState(false);
-
-  const getIsSubscribed = async () => {
-    try {
-      let context = {
-        chain: 97,
-        address: bluefieladdress[97],
-        abi: bluefieldAbi,
-        method: "isSubscribed",
-        args: [address, name],
-      };
-
-      let res = await readContract(context);
-
-      console.log(res, "res 1");
-
-      setUserIsSubscribed(res);
-    } catch (error) {
-      console.log(error);
-      setUserIsSubscribed(false);
-    }
-  };
-
-  useEffect(() => {
-    getIsSubscribed();
-
-    let interval = setInterval(() => {
-      getIsSubscribed();
-    }
-    , 10_000);
-
-    return () => {
-      clearInterval(interval);
-    };
-
-  }, [address, name]);
+console.log("memo",userIsSubscribed)
 
   return (
     <>

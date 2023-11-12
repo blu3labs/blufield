@@ -7,7 +7,7 @@ import { client } from "../../../../utils/client";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import { getOffchainAuthKeys } from "../../../../utils/auth";
 import moment from "moment"
-function TextContent({ data, index, content }) {
+function TextContent({ data, index, content,price,name,userIsSubscribed }) {
   const { address, connector } = useAccount();
   const { chain } = useNetwork();
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -63,7 +63,12 @@ function TextContent({ data, index, content }) {
   console.log(data, "postContent");
   return (
     <div className="fieldTextContent">
-      {content?.Visibility == 2 && <FieldMask />}
+      {content?.Visibility == 2 && !userIsSubscribed &&
+
+
+      
+      
+      <FieldMask price={price} name={name}/>}
       <img src={data.banner} alt="banner" draggable="false" />
       <div className="fieldTextContentTitle">{data.title}</div>
       <div className="fieldTextContentShortText">{data.short_text}</div>

@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSigner } from "../../../utils/useSigner";
 import { getEddsaCompressedPublicKey } from "@bnb-chain/greenfield-zk-crypto";
 import { api } from "../../../utils/api";
-
+import toast from "react-hot-toast"
 function CreateText() {
   const { id } = useParams();
 
@@ -55,6 +55,10 @@ function CreateText() {
         },
         "text"
         );
+        if (d.includes("success")) {
+          toast.success("Text Post added successfuly!")
+
+        }
       }catch(e){
         console.log(e);
       }

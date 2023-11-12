@@ -7,7 +7,7 @@ import { client } from "../../../../utils/client";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 import { getOffchainAuthKeys } from "../../../../utils/auth";
 import moment from "moment"
-function AudioContent({ data, index, content }) {
+function AudioContent({ data, index, content, price, name,userIsSubscribed }) {
   const { address, connector } = useAccount();
   const { chain } = useNetwork();
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -62,7 +62,7 @@ function AudioContent({ data, index, content }) {
   }, [content]);
   return (
     <div className="audioContent">
-     {content?.Visibility == 2 &&  <FieldMask />
+     {content?.Visibility == 2 &&  !userIsSubscribed && <FieldMask price={price} name={price} />
       }
       <img src={data.banner} alt="banner" draggable="false" />
 

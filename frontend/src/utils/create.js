@@ -217,6 +217,7 @@ export const CreateData = async (
     // send to our bucket
 
     console.log(uploadRes, " upload result");
+    return uploadRes.message
     // upload object
   } else if (type === "audio") {
     data = {
@@ -385,10 +386,13 @@ export const CreateData = async (
         signingData
       );
       console.log(audioUpload, " audio upload");
+      return audioUpload.message
     } catch (err) {
       console.log(err);
     }
     console.log(tx, " tx");
+
+
 
     // upload audio$
 
@@ -487,4 +491,5 @@ export const CreateData = async (
       signingData
     );
   }
+
 };

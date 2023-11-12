@@ -69,7 +69,7 @@ function WalletButton() {
 
   useEffect(() => {
     fetchUserPage();
-  }, []);
+  }, [address]);
 
   const items = [
     {
