@@ -36,7 +36,6 @@ async function pushImage(file, client) {
         .toBuffer();
     }
 
-
     const filedata = buf;
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     let name =
