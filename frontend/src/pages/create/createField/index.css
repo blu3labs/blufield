@@ -111,3 +111,52 @@
 .createFieldButton:hover{
     transform: scale(1.02);
 }
+
+.createFieldStep2{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+
+.createFieldStep2 button{
+    align-self: center;
+    width: 250px;
+    background: var(--create-accent);
+    color: #fff;
+    border-radius: 8px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.createFieldStep2 button:hover{
+    transform: scale(1.02);
+}
+
+.createFieldStep2Items{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+}
+
+.createFieldStep2Item{
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: 2px solid var(--create-accent);
+    cursor: pointer;
+    overflow: hidden;
+}

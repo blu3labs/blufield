@@ -47,7 +47,7 @@ async function pushImage(file, client) {
       file.mimetype.split("/")[1];
     const imageTx = await client.object.createObject(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -69,7 +69,7 @@ async function pushImage(file, client) {
     });
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         objectName: name,
         body: filedata,
         txnHash: txHash.transactionHash,
@@ -104,7 +104,7 @@ async function createUser(body, client) {
     const { expectCheckSums, contentLength } = await getCheckSums(buffered);
     const userTx = await client.object.createObject(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -127,7 +127,7 @@ async function createUser(body, client) {
 
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         objectName: body.name + ".json",
         body: buffered,
         txnHash: txHash.transactionHash,
@@ -159,7 +159,7 @@ async function getAllUser(client) {
   try {
     const sps = await getAllSps(client);
     const getAllBucketIds = await client.object.listObjects({
-      bucketName: "profiles",
+      bucketName: "blufield",
       endpoint: sps[0].endpoint,
     });
     let objects = [
@@ -212,7 +212,7 @@ async function getUser(name, client) {
 async function updateUser(body, client) {
   try {
     const deleteTx = await client.object.deleteObject({
-      bucketName: "profiles",
+      bucketName: "blufield",
       objectName: body.name + ".json",
       operator: process.env.WALLET_ADDRESS,
     });
@@ -224,7 +224,7 @@ async function updateUser(body, client) {
     const { expectCheckSums, contentLength } = await getCheckSums(filedata);
     const userTx = await client.object.createObject(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         contentLength: contentLength,
         creator: process.env.WALLET_ADDRESS,
         expectCheckSums: JSON.parse(expectCheckSums),
@@ -247,7 +247,7 @@ async function updateUser(body, client) {
 
     const uploadRes = await client.object.uploadObject(
       {
-        bucketName: "profiles",
+        bucketName: "blufield",
         objectName: body.name + ".json",
         body: filedata,
         txnHash: txHash.transactionHash,

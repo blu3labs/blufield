@@ -39,6 +39,7 @@ function CreateField() {
 
   const localItems = JSON.parse(localStorage.getItem("createItems"));
 
+
   console.log(localItems, "localItems");
 
   const uploadPhoto = async (img) => {
@@ -120,8 +121,9 @@ function CreateField() {
   };
 
 
-
+const [step2Loading,setStep2Loading] = useState(false);
   const handleStep2 = async () => {
+    setStep2Loading(true);
     try{
 
       // step 2
@@ -157,6 +159,7 @@ function CreateField() {
     }catch(error){
       console.log(error)
     }
+    setStep2Loading(false);
   }
 
 
@@ -277,16 +280,49 @@ function CreateField() {
 }else if(step == 1){
 
   return (
-    <div>
-      group id: {localItems?.groupId}
-      name:  {localItems?.name}
-      price: {localItems?.price}
+    <div className="createFieldStep2">
+      <div className="createFieldStep2Items">
+
+      <div className="createFieldStep2Item">
+        <span>
+          Group Id 
+        </span>
+        <span>
+          {localItems?.groupId}
+        </span>
+      </div>
+
+     
+
+      <div className="createFieldStep2Item">
+        <span>
+          Name
+        </span>
+        <span>
+          {localItems?.name}
+        </span>
+      </div>
+
+      <div className="createFieldStep2Item">
+        <span>
+          Price
+        </span>
+        <span>
+          {localItems?.price}
+        </span>
+      </div>
+      </div>
 
 
       <button
         onClick={() => handleStep2()}
+        disabled={step2Loading}
+        style={{
+          cursor: step2Loading ? "not-allowed" : "pointer",
+          opacity: step2Loading ? "0.5" : "1",
+        }}
       >
-        Register Group
+        Register Group{step2Loading && "..."}
       </button>
     </div>
   )
